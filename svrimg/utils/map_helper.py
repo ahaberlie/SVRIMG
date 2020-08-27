@@ -61,6 +61,13 @@ def coords(gx, gy):
     """
     return np.vstack([gx.ravel(), gy.ravel()]).T
     
+def radar_norm():
+
+    cmap = radar_colormap()
+    classes = np.array(list(range(0, 85, 5)))
+    norm = BoundaryNorm(classes, ncolors=cmap.N)    
+    
+    return cmap, norm
     
 def radar_colormap():
 
@@ -83,8 +90,28 @@ def radar_colormap():
                                 "#000000"]
                                 
     cmap = ListedColormap(nws_reflectivity_colors)
+    
 
     return cmap
+    
+def draw_box_plot(ax, img):
+
+    cmap, norm = radar_norm()
+    mmp = ax.imshow(np.flipud(img), cmap=cmap, norm=norm)
+    ax.arrow(125.5, 119, 0, -0.5, head_width=10, head_length=15, fc='k', ec='k', zorder=10)
+    ax.text(120, 130, "N", fontsize=35, zorder=10)
+    plt.colorbar(mmp, ax=ax, shrink=0.2, pad=0.01)
+    ax.set_yticks(list(range(0, 153, 17)))
+    ax.set_yticklabels([  0  ,  64, 128 , 192, 256  , 320, 
+                        384 , 448, 512])
+    ax.set_xticks(list(range(0, 153, 17)))
+    ax.set_xticklabels([  0  ,  64, 128 , 192, 256  , 320, 
+                        384 , 448, 512])
+    ax.set_xlabel("km")
+    ax.set_ylabel("km")
+    ax.grid()
+    
+    return ax
     
 def draw_geography(ax, geo_data_dir='../data/geo'):
         
