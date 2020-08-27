@@ -9,38 +9,60 @@ import xarray as xr
 from imageio import imread
 
 def _parse_str(in_str, url="http://svrimg.org/data/raw_img/"):
+    """Attempts to parse a string assuming it has some form 
+    of datetime format. Returns a formatted base url directory 
+    for monthly files. Function will fail if in_str is not 
+    datetime-like.
+    
+    :param in_str: str.  String with date information.
+    :param url: str. Base url from which to access files. 
+                Default = "http://svrimg.org/data/raw_img/"
+    :return: f_url: str. base url for monthly file directory.
+    """
 
     date = parse(in_str)
     yr = date.year
     mo = date.month
-    dy = date.day
-    hr = date.hour
-    mn = date.minute
     
     f_url = "{}/{}/{:02d}/".format(url, yr, mo)
-    f_format = "{}{:02d}{:02d}{:02d}{:02d}".format(yr, mo, dy, 
-                                                      hr, mn)
                                                       
-    return f_url, f_format           
+    return f_url           
     
 def _write_img(p_dir, f_url, i_name):
-
+    """Downloads an image from a given url and saves it 
+    in a specified directory.
+    
+    :param p_dir: str. Directory in which to save the image.
+    :param f_url: str. Base url from which to access files.
+    :param i_name: str. Image filename.
+    :return: None
+    """
+    
     file_url = f_url + i_name
     img = urlopen(file_url)
     with open(p_dir + i_name, "wb") as file:
         file.write(img.read())
                 
-def request_images(input_list, data_dir):
-
+def request_images(id_list, data_dir):
+    """Downloads images and saves them based on a list of unique identifiers. 
+    If the images are already downloaded, this function just returns the file 
+    location of the image. This assumes that 'data_dir' exists.
+    
+    :param id_list: list or ndarray. List of unique svrimg identifiers.
+    :param data_dir: str. Base directory in which to save the images.
+    :return: loc: dict. A dictionary of unique identifiers and where the 
+                        affiliated file was saved.
+    """
+    
     file_locs = {}
     
-    if type(input_list) == list or type(input_list) == np.ndarray:
+    if type(id_list) == list or type(id_list) == np.ndarray:
     
         filename = None
         
-        for img_name in input_list:
+        for img_name in id_list:
         
-            folder_url, f_format = _parse_str(img_name[:12])
+            folder_url = _parse_str(img_name[:12])
             
             year = img_name[:4]
             parent_dir = "{}/{}/".format(data_dir, year)
@@ -63,9 +85,19 @@ def request_images(input_list, data_dir):
             
     return file_locs
     
-def get_img_list(id_list):
-
-    loc = request_images(id_list, "../data/tor")
+def get_img_list(id_list, data_dir):
+    """Downloads images and saves them based on a list of unique identifiers. 
+    If the images are already downloaded, the file is not downloaded. The
+    function then takes the images and puts them into a list. The order is 
+    not guaranteed to be the same as the input list. This assumes that 
+    'data_dir' exists.
+    
+    :param id_list: list or ndarray. List of unique svrimg identifiers.
+    :param data_dir: str. Base directory in which to save the images.
+    :return: images: ndarray. A list of images corresponding to the given
+                              id_list.
+    """
+    loc = request_images(id_list, data_dir)
     images = []
 
     for unid, file in loc.items():
@@ -76,22 +108,52 @@ def get_img_list(id_list):
     
     return images
     
-def geo_read_image(row, uid, filename, x_=1399, y_=899):
-
-    im = read_image(filename)
+def geo_read_image(index, locator, uid, x_=1399, y_=899):
+    """Read an image based on a unique identifier, and place the image
+    within the original grid.  Requires an svrimg index table that 
+    can be accessed from the function get_index_tables in utils.get_tables.
     
-    blank = np.zeros(shape=(y_, x_))
-    blank[row.ymin:row.ymax+1, row.xmin:row.xmax+1] = im
+    :param index: DataFrame.  A svrimg index table that contains information
+                              on the requested image.
+    :param locator: dict. Lookup table for file locations based on a given
+                          unique svrimg id.
+    :param uid: str. Unique svrimg id.
+    :param x_: int. Size of x dimension of original grid.
+    :param y_: int. Size of y dimension of original grid.
+    :return: canvas: (y_, x_) ndarray. A ndarray of the same dimensions as the
+                                       original grid with all zeroes except the
+                                       location where the image identified with
+                                       'uid' was extracted from.
+    """
+    row = index.loc[uid]
+    im = read_image(locator[uid])
+    canvas = np.zeros(shape=(y_, x_))
+    canvas[row.ymin:row.ymax+1, row.xmin:row.xmax+1] = im
     
-    return blank
+    return canvas
     
     
 def read_image(filename):
-
+    """Read and return raw image information based on a given filename.
+    
+    :param index: filename. str. File from which to read image information.
+    :return: image: (M, N) ndarray.  An ndarray representation of the image.
+    """
     return imread(filename, pilmode='P')
     
 def get_example(data_dir="../data/example/", url="http://svrimg.org/data/"):
-
+    """Downloads an interpolated GridRad (gridrad.org) file from a url and returns an xarray 
+    dataset representation from April 27th at 1900 UTC.  If the file is already downloaded, 
+    it simply returns an xarray dataset representation. This assumes that 'data_dir' exists.
+    
+    :param data_dir: str. Base directory in which to save the netcdf file. Default
+                          is "../data/example/".
+    :param url: str. Base url directory where the example data is located. Default
+                          is "http://svrimg.org/data/".
+    :return: gridrad. xarray dataset.  an xarray dataset representation of
+                                       interpolated GridRad data on April 27th 
+                                       at 1900 UTC.
+    """
     if not os.path.exists("{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc".format(data_dir)):
         
         _url = url + "nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc"
