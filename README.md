@@ -21,7 +21,7 @@ to examine the images and make your own classifications.</p>
 Radar images are centered on <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> and extracted from the closest 
 hourly data in <a href=http://gridrad.org/>GridRad</a> which can be downloaded from the <a href=https://rda.ucar.edu/datasets/ds841.0/>Research Data Archive</a>.  
 The original ~2x2km 3D data are converted to 2D by calculating the column maximum reflectivity.  These values are then converted to 8-bit integers and interpolated 
-to a 3.75 km <a href="http://svrimg.org/maps/geog_ref.nc">Lambert Conic Conformal Grid</a> using nearest neighbor. The 136 x 136 dimensions result in a region approximately 512 x 512 km.
+to a 3.75 km <a href="http://svrimg.org/maps/svrimg_geog.nc">Lambert Conic Conformal Grid</a> using nearest neighbor. The 136 x 136 dimensions result in a region approximately 512 x 512 km.
 Please view the <a href="http://svrimg.org/raw_data.html">data information page</a> for more information and to download the raw data.
 </p>
 
