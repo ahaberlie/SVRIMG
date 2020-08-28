@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>    
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+<script>
+    L_NO_TOUCH = false;
+    L_DISABLE_3D = false;
+
+    //Function that allows user to download table data
+    //in csv format.
+    function download_csv(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        csvFile = new Blob([csv], {type: "text/csv"});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
+    //Function that exports table data to csv format.
+    function export_table_to_csv(year) {
+        
+        html=document.getElementById('class_table').outerHTML;
+        filename=year + "_table" + "_" + Date.now() + ".csv"
+        
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            
+            for (var j = 0; j < cols.length; j++) 
+                row.push(cols[j].innerText);
+            
+            csv.push(row.join(","));		
+        }
+
+        // Download CSV
+        download_csv(csv.join("\n"), filename);
+    }
+    
+    //Function that saves classifications in a table
+    function classify(id, c) {
+        var tableRef = document.getElementById('class_table').getElementsByTagName('tbody')[0];
+        var newRow   = tableRef.insertRow();
+        var newCell  = newRow.insertCell(0);
+        var newText  = document.createTextNode(id);
+        newCell.appendChild(newText);
+        
+        var newCell  = newRow.insertCell(1);
+        var newText  = document.createTextNode(c);
+        newCell.appendChild(newText);
+        
+        var className = ""
+        if (c == 0) {
+            className = "Cellular";
+        } else if (c == 1) {
+            className = "QLCS";
+        } else if (c == 2) {
+            className = "Tropical";
+        } else if (c == 3) {
+            className = "Other";
+        } else if (c == 4) {
+            className = "Noise";
+        } else if (c == 5) {
+           className = "Missing";
+        } 
+        
+        var newCell  = newRow.insertCell(2);
+        var newText  = document.createTextNode(className);
+        newCell.appendChild(newText);
+
+    }
+</script>    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+<link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+
+<style>
+<meta name="viewport" content="width=device-width,
+initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    html, body {width: 100%;height: 100%;margin: 0;padding: 0;}
+    #map {position:absolute;top:0;bottom:0;right:0;left:0;}
+
+
+    #map_leafletid {
+        position: relative;
+        width: 100.0%;
+        height: 100.0%;
+        left: 0.0%;
+        top: 0.0%;
+    }
+
+    body {font-family: "Lato", sans-serif;}
+    
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #000000;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      color: #ffffff;
+      padding: 15px;
+      text-decoration: none;
+      font-size: 20px;
+      margin-left:15%
+      margin-right:15%
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+</style>
+</head>
+
+<body> 
+   
+    <section class="w3-container w3-content w3-center">
+        <h1>Header</h1>
+        <h2>Sub-header</h2>
+    </section>
+
+<section class="w3-container w3-content w3-center">
+    <div class="topnav">
+        <a href="../index.html">Home</a>
+        <a href="../tutorial.html">Classify</a>
+        <a href="../raw_data.html">Data</a>
+        <a href="../machine_learning.html">Machine Learning</a>
+        <a href="https://github.com/ahaberlie/SVRIMG">Notebooks (GitHub)</a>
+    </div>   
+
+<h2>Map Interface for YYYY</h2>
+    <p class="w3-center">Zoom In to See Radar Images Centered on Tornado Reports</p>
+    <p class="w3-justify">Click on an image and choose a classification in the pop up menu. If you want information on the different classes, please examine the <a href="../tutorial.html"><b>tutorial</b></a>. 
+                          These data are not saved on the server and will disappear if you do not download a CSV file (click Export Table to CSV File).
+                          We ask that you optionally send the CSV file to svr.image@gmail.com to add to the crowdsourced classification repository.  
+                          Identifying information will never be published, and anonymous emails are accepted.  There is no obligation to do this, and you are 
+                          free to use the data how you wish. The UNID field can be used to join with the SVRGIS data here: <a href="../data/YYYY/YYYY_tor_utc_svrimg.csv"><b>YYYY CSV</b></a></p>
+  
+</section>
+
+<!-- Insert leaflet map ID here -->
+<div class="w3-container w3-content w3-center" style="max-width:50%;max-height:600px" id="map_leafletid" ></div>
+
+<!-- Table and button for classification -->
+<section class="w3-container w3-content w3-center"><br>
+    <p><button class="w3-center" id="download" onclick="export_table_to_csv(1996)">Export table to CSV file</button></p>
+    <p class="w3-center">Please send CSV to svr.image@gmail.com to add to crowdsourced classifications.</p>
+    <p class="w3-center">Note: Identifying information will never be made public and anonymous emails are accepted.</p>
+
+    <table id="class_table" class="table table-bordered table-striped table-hover table-condensed table-responsive">
+    <thead>
+        <tr>
+            <th>UNID</th>
+            <th>Class Code</th>
+            <th>Class Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>YYYYMMMDDmmz123456789 (Example)</td>
+            <td>0</td>
+            <td>Cellular</td>
+        </tr>
+    </tbody>
+    </table>
+</section>        
+</body>
+<script>   
+//Place leaflet code here 
+
+</script>
+</html>

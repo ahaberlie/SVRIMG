@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #000000;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  color: #ffffff;
+  padding: 15px;
+  text-decoration: none;
+  font-size: 20px;
+  margin-left:15%
+  margin-right:15%
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+<body>
+<section class="w3-container w3-content w3-center">
+<h1>SVRIMG - SeVere Reflectivity IMaGe Dataset</h1>
+<h2>Raw Reflectivity Data in 136 x 136 Images</h2>
+</section>
+
+<section class="w3-container w3-content w3-center">
+<div class="topnav">
+  <a href="index.html">Home</a>
+  <a href="tutorial.html">Classify</a>
+  <a href="raw_data.html">Data</a>
+  <a href="machine_learning.html">Machine Learning</a>
+  <a href="https://github.com/ahaberlie/SVRIMG">Notebooks (GitHub)</a>
+</div>  
+
+<div>
+<h3 class="w3-justify">Data Methodology</h3>
+<p class="w3-justify">
+Radar images are centered on <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> and extracted from the closest 
+hourly data in <a href=http://gridrad.org/>GridRad</a> which can be downloaded from the <a href=https://rda.ucar.edu/datasets/ds841.0/>Research Data Archive</a>.  
+The original ~2x2km 3D data are converted to 2D by calculating the column maximum reflectivity.  These values are then converted to 8-bit integers and interpolated 
+to a 3.75 km <a href="/maps/geog_ref.nc">Lambert Conic Conformal Grid</a> using nearest neighbor. The 136 x 136 dimensions result in a region approximately 512 x 512 km.
+
+<h3 class="w3-justify">Metadata</h3>
+<p class="w3-justify">
+Geogrid parameters:
+<lu>
+<li class="w3-justify"> WEST-EAST_PATCH_END_UNSTAG: 1399</li>
+<li class="w3-justify"> SOUTH-NORTH_PATCH_END_UNSTAG: 899</li>
+<li class="w3-justify"> GRIDTYPE: C</li>
+<li class="w3-justify"> DX: 3750.0 m</li>
+<li class="w3-justify"> DY: 3750.0 m</li>
+<li class="w3-justify"> CEN_LAT: 38.500004</li>
+<li class="w3-justify"> CEN_LON: -97.5</li>
+<li class="w3-justify"> TRUELAT1: 38.5</li>
+<li class="w3-justify"> TRUELAT2: 38.5</li>
+<li class="w3-justify"> MOAD_CEN_LAT: 38.500004 </li>
+<li class="w3-justify"> STAND_LON: -97.5</li>
+<li class="w3-justify"> POLE_LAT: 90.0</li>
+<li class="w3-justify"> POLE_LON: 0.0</li>
+<li class="w3-justify"> corner_lats: [20.509216 48.89253  48.89253  20.509216 20.505005 48.88618  48.88618
+ 20.505005 20.493675 48.90784  48.90784  20.493675 20.48948  48.901493
+ 48.901493 20.48948 ]</li>
+<li class="w3-justify"> corner_lons: [-121.81102  -133.66338   -61.33661   -73.188965 -121.82761  -133.68666
+  -61.313354  -73.17239  -121.80653  -133.67303   -61.326965  -73.19348
+ -121.82312  -133.69632   -61.30368   -73.17688 ]</li>
+<li class="w3-justify"> MAP_PROJ: 1</li>
+</lu>
+
+</p>
+
+
+<p class="w3-justify">
+Description of the columns in the CSV are as follows:
+<lu>
+<li class="w3-justify"> area - Area covered by 20+ dBZ pixels.</li>
+<li class="w3-justify"> convection_area - Area covered by 40+ dBZ pixels. </li>
+<li class="w3-justify"> filename - original image location. </li>
+<li class="w3-justify"> intense_area - Area covered by 50+ dBZ pixels. </li>
+<li class="w3-justify"> intensity_variance - dBZ variance of all non-zero pixels in image. </li>
+<li class="w3-justify"> kind - hazard type. </li>
+<li class="w3-justify"> max_intensity - maximum dBZ intensity in image. </li>
+<li class="w3-justify"> mean_intensity - mean dBZ intensity in image. </li>
+<li class="w3-justify"> radar_file - original converted GridRad file location. </li>
+<li class="w3-justify"> radar_time - (UTC) Valid GridRad time closest to the report_time. </li>
+<li class="w3-justify"> report_time - (UTC) Time reported in SVRGIS. </li>
+<li class="w3-justify"> unid - YYYYMMDDHHmm and SVRGIS "om" unid padded to 9 digits separated by a 'z' to denote UTC time.</li>
+<li class="w3-justify"> xmax - maximum x coordinate in 3.75 km LCC grid.</li>
+<li class="w3-justify"> xmin - minimum x coordinate in 3.75 km LCC grid.</li>
+<li class="w3-justify"> ymax - maximum y coordinate in 3.75 km LCC grid.</li>
+<li class="w3-justify"> ymin - minimum y coordinate in 3.75 km LCC grid.</li>
+</lu>
+</p>
+<p class="w3-justify">
+The unid column is based on the report time in UTC and "om" identifier from the "1950-2018_actual_tornadoes.csv" file on 
+the <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> page. You should be able to easily join
+these data with those data to attach more attributes.
+</p> 
+<h3 class="w3-justify">Disclaimers and Caveats</h3>
+<p class="w3-justify">
+The data are provided at no cost, as-is, with no warranty of any kind. No modification of either the SPC reports or the GridRad data (beyond interpolation) 
+is done before these data are hosted on the website. The process is completely repeatable from start to finish, assuming you have patience or access to a 
+supercomputer cluster. Please examine the <a href=http://gridrad.org/>GridRad</a> and the <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> pages
+to read about the caveats and issues with those data before using these data.
+<p>
+<p class="w3-justify">
+<h4 class="w3-justify">Known issues include:</h4> 
+<lu>
+<li class="w3-justify"> Severe reports closer to 30 minutes after the hour will have images
+with displaced reflectivity and the level of displacement is dependent on storm motion.
+<li class="w3-justify"> No attempt is made to remove reports with incorrect positions or those that have no radar data.
+A csv is provided that includes basic radar reflectivity statistics which make it possible to filter these events.
+<li class="w3-justify"> The 3.75 km <a href="/maps/svrimg_geog.nc">LCC Grid</a> has larger grid spacing than the original data.
+This will result in some detail being lost.  This was a decision made to reduce the size of the dataset on disk and on GPU.
+<li class="w3-justify"> The raw data are originally "upside down" because of how the grid was defined.  The image browser on this
+website provides flipped images.  However, the tarball data will have the original orientation that matches up with the LCC grid.
+Please take the time to examine what you are throwing into your ConvNet!
+
+</p> 
+
+<h3 class="w3-justify">Data Citations</h3>
+<p class="w3-justify">We are generating these data solely because we think they would be of interest to the meteorology and 
+climatology community. That being said, we would like to get some credit if you find them useful! 
+
+<p><h4 class="w3-justify">If using these data in a paper or project, please cite the methods paper:</h4></p>
+<p class="w3-justify">Haberlie, A. M., W. S. Ashley, and M. Karpinski, 2020: Mean storms: 
+   Composites of radar reflectivity images during two decades of severe thunderstorm events. International Journal of Climatology, In Press.
+</p>
+<p><h4 class="w3-justify">Please cite the GridRad dataset as well:</h4></p>
+<p class="w3-justify">Bowman, K. P., and C. R. Homeyer. 2017. GridRad - Three-Dimensional Gridded NEXRAD WSR-88D Radar Data. 
+   Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.</p> 
+
+<h3 class="w3-justify">Download the Data</h3>
+<p class="w3-justify">
+136 x 136 pixel images with units of dBZ.  Center of the image is the location of the report.</p>
+<table class="w3-justify">
+<tr>
+<th>
+1996
+</th>
+<th>
+<a href="data/tars/1996_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/1996/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+
+<tr>
+<th>
+1997
+</th>
+<th>
+<a href="data/tars/1997_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/1997/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+
+<tr>
+<th>
+1998
+</th>
+<th>
+<a href="data/tars/1998_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/1998/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+
+<tr>
+<th>
+1999
+</th>
+<th>
+<a href="data/tars/1999_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/1999/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+
+<tr>
+<th>
+2000
+</th>
+<th>
+<a href="data/tars/2000_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2000/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+
+<tr>
+<th>
+2001
+</th>
+<th>
+<a href="data/tars/2001_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2001/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+
+<tr>
+<th>
+2002
+</th>
+<th>
+<a href="data/tars/2002_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2002/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2003
+</th>
+<th>
+<a href="data/tars/2003_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2003/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2004
+</th>
+<th>
+<a href="data/tars/2004_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2004/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2005
+</th>
+<th>
+<a href="data/tars/2005_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2005/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2006
+</th>
+<th>
+<a href="data/tars/2006_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2006/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2007
+</th>
+<th>
+<a href="data/tars/2007_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2007/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2008
+</th>
+<th>
+<a href="data/tars/2008_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2008/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2009
+</th>
+<th>
+<a href="data/tars/2009_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2009/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<tr>
+<th>
+2010
+</th>
+<th>
+<a href="data/tars/2010_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2010/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2011
+</th>
+<th>
+<a href="data/tars/2011_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2011/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2012
+</th>
+<th>
+<a href="data/tars/2012_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2012/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2013
+</th>
+<th>
+<a href="data/tars/2013_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2013/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2014
+</th>
+<th>
+<a href="data/tars/2014_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2014/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2015
+</th>
+<th>
+<a href="data/tars/2015_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2015/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2016
+</th>
+<th>
+<a href="data/tars/2016_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2016/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+<th>
+2017
+</th>
+<th>
+<a href="data/tars/2017_svrimg_raw.tar.gz">Images and CSVs</a>
+</th>
+<th>
+<a href="data/2017/index.html">Browse Thumbnails</a>
+</th>
+</tr>
+</table>
+</div>
+</section>
+</body>
+
+</html>
