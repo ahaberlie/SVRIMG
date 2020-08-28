@@ -1,6 +1,25 @@
 <h1>SVRIMG - SeVere Reflectivity IMaGe Dataset</h1>
 <h2>Radar Reflectivity Images Centered on Severe Weather Reports</h2>
 
+<h3>Dependencies</h3>
+<p>These Python packages are needed to run the code in this repository.</p>
+<lu>
+<li>numpy</li>
+<li>matplotlib</li>
+<li>pandas</li>
+<li>xarray</li>
+<li>imageio</li>
+<li>cartopy</li>
+<li>jupyter</li>
+<li>notebook</li>
+</lu>
+
+<p>Copy and paste into anaconda python command prompt to install requirements.</a>
+
+```
+conda install numpy matplotlib pandas xarray imageio cartopy jupyter notebook
+```
+
 <h3>Overview</h3>
 <p>
 <a href="http://svrimg.org">SVRIMG</a> provides a "one stop shop" for over 25,000 (and more to come) data rich, geospatial, radar reflectivity images centered on high-impact weather events. 
