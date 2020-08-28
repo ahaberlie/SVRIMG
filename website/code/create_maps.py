@@ -55,12 +55,12 @@ def create_svrimg_map(svr_tab_loc, year, class_dict, c_lat, c_lon, zoom):
 
                 print(e)
                 
-        html_string = map_osm.get_root().render()
+        html_string = leaf_map.get_root().render()
         html_file = open("{}_map.html".format(year), "w")
         html_file.write(html_string)
         html_file.close()
     
-        df_.to_csv("{}_tor_utc_svrimg.csv".format(year))
+        svrgis.to_csv("{}_tor_utc_svrimg.csv".format(year))
         
         
 if __name__ == "__main__":
