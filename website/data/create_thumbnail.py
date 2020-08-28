@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from imageio import imread
 from PIL import Image
     
-def create_thumnail(dtime, svrimg)
+def create_thumnail(dtime, svrimg):
     """Create a thumbnail for and image that has already been 
     downloaded for a given datetime.
     
