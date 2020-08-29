@@ -7,6 +7,7 @@ import numpy as np
 from urllib.error import HTTPError
 import pandas as pd
 import xarray as xr
+import glob
 
 def get_index_table(in_str, data_dir, url="http://svrimg.org/data/"):
     """Downloads svrimg index table from the given url and returns a pandas
@@ -79,6 +80,52 @@ def get_svrgis_table(data_dir, url="http://svrimg.org/data/"):
         #print("{}/96-17_tor_utc_gridrad.csv".format(data_dir), "is already downloaded")
         return pd.read_csv("{}/96-17_tor_utc_gridrad.csv".format(data_dir), index_col='uid')            
         
+def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True, 
+                    default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
+                    remove_first_row=False):
+    """Either downloads example predictions if 'example' is true, or combines your prediction
+    tables in 'data_dir' into one table using the default naming format of 
+    '*_Table_*.csv' or whatever is passed into default_name. This will
+    attempt to grab every year from 1996 - 2017, but will not fail if a year is missing. 
+    By default, the first row in every year's table is example data on svrimg.org, and 
+    it can be removed as long as 'remove_first_row' is True. By default, if there is a 
+    repeated UNID, the last one is kept.  The theory here is that if you accidentally 
+    clicked something, you would go back and fix it.  Thus, the nth time is likely 
+    more accurate.
+    
+    :param data_dir: str. Base directory in which to save the csv file.
+    :param url: str. Base url directory where the table data is located. 
+                     Default is "http://svrimg.org/data/".
+    :param example: bool. If True, download example data.  If false, look for local 
+                          yearly tables. Default is True.
+    :param default_name: str. Naming format for local csv files. Stars are used as wildcards.
+                              Default is '*_Table_*.csv'.
+    :param csv_name: str. Default name of new csv file containing classifications.
+    :param remove_first_row: bool. Removes first row from each year of local table data 
+                                   if True, ignores first row if false. Default is False.
+    :return: csv. pandas DataFrame.  A DataFrame of UNIDs and their predictions.
+    """  
+    if example:
+        if not os.path.exists("{}/{}.csv".format(data_dir, csv_name)):
+            _url = url + "sample_classifications_96-17.csv"
+            c = pd.read_csv(_url, index_col='UNID')
+            c.to_csv("{}/{}.csv".format(data_dir, csv_name))
+    else:
+        csvs = []
+        for fname in glob.glob(data_dir + "*_Table_*.csv"):
+        
+            print("Reading", fname)
+            
+            a = pd.read_csv(fname)
+            a = a.drop(0)
+            a = a.drop_duplicates(subset=["UNID"], keep='last')
+            a = a.set_index("UNID")
+            csvs.append(a)
+        csvs = pd.concat(csvs)
+        csvs.to_csv("{}/{}.csv".format(data_dir, csv_name))
+            
+    return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
+
 def get_geog(data_dir, url="http://svrimg.org/maps/"):
     """Downloads svrimg geography netcdf file from the given url and returns
     an xarray dataset. If the netcdf file is already downloaded, it simply 

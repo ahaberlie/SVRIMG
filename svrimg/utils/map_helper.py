@@ -78,9 +78,10 @@ def draw_box_plot(ax, img, cbar_shrink=0.35):
     """ 
     cmap, norm = radar_norm()
     mmp = ax.imshow(np.flipud(img), cmap=cmap, norm=norm)
-    ax.arrow(125.5, 119, 0, -0.5, head_width=10, head_length=15, fc='k', ec='k', zorder=10)
-    ax.text(120, 130, "N", fontsize=cbar_shrink, zorder=10)
-    plt.colorbar(mmp, ax=ax, shrink=0.35, pad=0.01)
+    ax.arrow(125.5, 119, 0, -0.0001, head_width=10, head_length=15, fc='k', ec='k', zorder=10)
+    ax.text(121, 130, "N", fontsize=35, zorder=10)
+    
+    plt.colorbar(mmp, ax=ax, shrink=cbar_shrink, pad=0.01)
     ax.set_yticks(list(range(0, 153, 17)))
     ax.set_yticklabels([  0  ,  64, 128 , 192, 256  , 320, 
                         384 , 448, 512])
