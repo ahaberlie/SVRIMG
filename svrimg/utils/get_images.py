@@ -74,7 +74,7 @@ def request_images(id_list, data_dir):
                     file_locs[img_name] = parent_dir + img_name + ".png"
                 except HTTPError as e:
                     print(e, parent_dir + img_name + ".png")
-                    file_locs[img_name] = np.nan
+                    file_locs[img_name] = "Missing"
             else:
                 #print(parent_dir + img_name + ".png", "Exists!")
                 file_locs[img_name] = parent_dir + img_name + ".png"
@@ -98,11 +98,11 @@ def get_img_list(id_list, data_dir, keep_missing=False):
     images = []
 
     for unid, file in loc.items():
-        if not np.isnan(file):
+        if file != "Missing":
             images.append(read_image(file))
         else:
             if keep_missing:
-                images.append(np.zeros(136, 136), np.uint8)
+                images.append(np.zeros((136, 136), dtype=np.uint8))
                 print(unid, " is missing an image file. Inserted blank image because keep_missing is True.")
             else:
                 print(unid, " is missing an image file. Did not insert blank image because keep_missing is False.")
