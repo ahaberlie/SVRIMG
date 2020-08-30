@@ -98,7 +98,7 @@ def get_img_list(id_list, data_dir, keep_missing=False):
     images = []
 
     for unid, file in loc.items():
-        if file != np.nan:
+        if not np.isnan(file):
             images.append(read_image(file))
         else:
             if keep_missing:
