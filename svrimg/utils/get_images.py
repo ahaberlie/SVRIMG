@@ -7,6 +7,7 @@ import numpy as np
 from urllib.error import HTTPError
 import xarray as xr
 from imageio import imread
+import pickle
 
 def _parse_str(in_str, url="http://svrimg.org/data/raw_img/"):
     """Attempts to parse a string assuming it has some form 
@@ -57,11 +58,9 @@ def request_images(id_list, data_dir):
     file_locs = {}
     
     if type(id_list) == list or type(id_list) == np.ndarray:
-    
-        filename = None
-        
+
         for img_name in id_list:
-        
+
             folder_url = _parse_str(img_name[:12])
             
             year = img_name[:4]
@@ -70,27 +69,25 @@ def request_images(id_list, data_dir):
             if not os.path.exists(parent_dir + img_name + ".png"):
                 if not os.path.exists(parent_dir):
                     os.makedirs(parent_dir)
-
                 try:
                     _write_img(parent_dir, folder_url, img_name + ".png")
-                    filename = parent_dir + img_name + ".png"
+                    file_locs[img_name] = parent_dir + img_name + ".png"
                 except HTTPError as e:
                     print(e, parent_dir + img_name + ".png")
-                
+                    file_locs[img_name] = np.nan
             else:
                 #print(parent_dir + img_name + ".png", "Exists!")
-                filename = parent_dir + img_name + ".png"
-                
-            file_locs[img_name] = filename
-            
+                file_locs[img_name] = parent_dir + img_name + ".png"
+
     return file_locs
     
-def get_img_list(id_list, data_dir):
+def get_img_list(id_list, data_dir, keep_missing=False):
     """Downloads images and saves them based on a list of unique identifiers. 
     If the images are already downloaded, the file is not downloaded. The
     function then takes the images and puts them into a list. The order is 
     not guaranteed to be the same as the input list. This assumes that 
-    'data_dir' exists.
+    'data_dir' exists.  If keep_missing is true, insert blank image into
+    the stack.
     
     :param id_list: list or ndarray. List of unique svrimg identifiers.
     :param data_dir: str. Base directory in which to save the images.
@@ -101,8 +98,14 @@ def get_img_list(id_list, data_dir):
     images = []
 
     for unid, file in loc.items():
-        if file != None:
+        if file != np.nan:
             images.append(read_image(file))
+        else:
+            if keep_missing:
+                images.append(np.zeros(136, 136), np.uint8)
+                print(unid, " is missing an image file. Inserted blank image because keep_missing is True.")
+            else:
+                print(unid, " is missing an image file. Did not insert blank image because keep_missing is False.")
             
     images = np.array(images)
     
@@ -132,7 +135,48 @@ def geo_read_image(index, locator, uid, x_=1399, y_=899):
     
     return canvas
     
+def get_example_data(data_type, data_dir="../data/pkls/", 
+                     url="http://svrimg.org/data/classifications/"):
+    """Returns training, validation, or testing data, depending on the
+    value of 'data_type'.  This function attempts to download the data
+    if the file does not exist in 'data_dir'.  Returns x and y data
+    for each subset.
     
+    :param data_type: str. Request 'training', 'validation', or 'testing' data.
+    :param data_dir: str. Base directory in which to save the netcdf file. Default
+                          is "../data/pkls/".
+    :param url: str. Base url directory where the example data are located. Default
+                          is "http://svrimg.org/data/classifications/".
+    :return: x_y_data: (X, Y) ndarray. A ndarray where the first dimension is a list
+                                       of images, and the second dimension is a list
+                                       of classifications.
+    """
+    if data_type == 'training':
+        loc = "{}/1996_2011_train.pkl".format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + "1996_2011_train.pkl"
+            pkl = urlopen(_url)
+            with open(loc, "wb") as file:
+                file.write(pkl.read())
+    elif data_type == 'validation':
+        loc = "{}/2012_2013_validation.pkl".format(data_dir)
+        _url = url + "2012_2013_validation.pkl"
+        pkl = urlopen(_url)
+        with open(loc, "wb") as file:
+            file.write(pkl.read())
+      
+    elif data_type == 'testing':
+        loc = "{}/2014_2017_test.pkl".format(data_dir)
+        _url = url + "2014_2017_test.pkl"
+        pkl = urlopen(_url)
+        with open(loc, "wb") as file:
+            file.write(pkl.read())
+    else:
+        print("Expected training, validation, or testing")
+        return None
+    return pickle.load(open(loc, "rb"))   
+
+
 def read_image(filename):
     """Read and return raw image information based on a given filename.
     
