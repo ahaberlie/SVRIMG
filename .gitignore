@@ -6,7 +6,6 @@
 *.pyc
 *.png
 *.pkl
-*.npy
 *.webm
 *.gif
 *.prj

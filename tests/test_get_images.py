@@ -7,7 +7,7 @@ from svrimg.utils.get_images import (_parse_str, _write_img, request_images,
                                      get_img_list, geo_read_image, get_example_data, 
                                      read_image, get_example)
                                      
-                                     
+test_data_dir = "../data/test/"                                    
 
 def test_parse_str():
 
@@ -26,9 +26,9 @@ def test_parse_str():
 
 def test_write_image():
 
-    test_img = np.load("test_imgs.npy")[3]
+    test_img = np.load(test_data_dir + "test_imgs.npy")[3]
     
-    save_dir = "./write_img/"
+    save_dir = test_data_dir + "write_img/"
     url_dir = "http://svrimg.org/data/raw_img/2011/04/"
     img_name = "201104041350z000282677.png"
     
@@ -46,9 +46,9 @@ def test_request_images():
                '201104041350z000282677',
                '201104041408z000282156']
                
-    data_dir = "./req_img/"
+    data_dir = test_data_dir + "req_img/"
     
-    img1, img2, img3, img4, img5 = np.load("test_imgs.npy")
+    img1, img2, img3, img4, img5 = np.load(test_data_dir + "test_imgs.npy")
     
     img_list = [img5, img4, img3, img2, img1]
     
@@ -69,9 +69,9 @@ def test_get_img_list():
                '201104041350z000282677',
                '201104041408z000282156']
     
-    data_dir = "./img_list/"
+    data_dir = test_data_dir + "/img_list/"
     
-    test_img_list = np.load("test_imgs.npy")
+    test_img_list = np.load(test_data_dir + "test_imgs.npy")
     img_list = get_img_list(id_list, data_dir)
     assert_almost_equal(img_list, test_img_list)
 
@@ -99,19 +99,10 @@ def test_geo_read_image():
     test_index = pd.DataFrame.from_dict(d)
     test_index = test_index.set_index("UNID")
     
-    f_dict = request_images(["201104271836z000303011"], "./georead/")
+    f_dict = request_images(["201104271836z000303011"], test_data_dir + "georead/")
 
-    test_img = np.load("geo_img.npy")
+    test_img = np.load(test_data_dir + "geo_img.npy")
     
     g_img = geo_read_image(test_index, f_dict, "201104271836z000303011")
     
     assert_almost_equal(test_img, g_img)
-
-
-def test_read_image():
-
-    test_img = imread("test_img.png", pilmode='P')
-    
-    img = read_image("test_img.png")
-    
-    assert_almost_equal(img, test_img)
