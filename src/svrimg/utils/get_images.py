@@ -161,17 +161,19 @@ def get_example_data(data_type, data_dir="../data/pkls/",
                 file.write(pkl.read())
     elif data_type == 'validation':
         loc = "{}/2012_2013_validation.pkl".format(data_dir)
-        _url = url + "2012_2013_validation.pkl"
-        pkl = urlopen(_url)
-        with open(loc, "wb") as file:
-            file.write(pkl.read())
+        if not os.path.exists(loc):
+            _url = url + "2012_2013_validation.pkl"
+            pkl = urlopen(_url)
+            with open(loc, "wb") as file:
+                file.write(pkl.read())
       
     elif data_type == 'testing':
         loc = "{}/2014_2017_test.pkl".format(data_dir)
-        _url = url + "2014_2017_test.pkl"
-        pkl = urlopen(_url)
-        with open(loc, "wb") as file:
-            file.write(pkl.read())
+        if not os.path.exists(loc):
+            _url = url + "2014_2017_test.pkl"
+            pkl = urlopen(_url)
+            with open(loc, "wb") as file:
+                file.write(pkl.read())
     else:
         print("Expected training, validation, or testing")
         return None

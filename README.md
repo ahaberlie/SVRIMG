@@ -14,6 +14,7 @@
 <p>These Python packages are suggested to run the jupyter notebook examples.</p>
 <lu>
 <li>jupyter notebook</li>
+<li>scikit-learn=0.23.2</li>
 <li>keras=2.3.1</li>
 <li>tensorflow-gpu=1.15.0</li>
 <li>cartopy=0.17.0</li>
