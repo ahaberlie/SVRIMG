@@ -7,13 +7,21 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 import numpy as np
     
 def radar_norm():
-    """Return a colormap and normalization that allow you to represent
+    r"""Return a colormap and normalization that allow you to represent
     radar data with colors every 5 dBZ that mimics the official NWS
     radar images.
-
-    :return: cmap: ListedColormap. NWS-like radar colormap.
-    :return: norm: BoundaryNorm. Normalization for 5 dBZ levels (0-80).
+    
+    Parameters
+    ----------
+        
+    Returns
+    -------
+    cmap: ListedColormap
+        NWS-like radar colormap.
+    norm: BoundaryNorm
+        Normalization for 5 dBZ levels (0-80).
     """ 
+
     cmap = radar_colormap()
     classes = np.array(list(range(0, 85, 5)))
     norm = BoundaryNorm(classes, ncolors=cmap.N)    
@@ -21,7 +29,7 @@ def radar_norm():
     return cmap, norm
     
 def radar_colormap():
-    """Returns an NWS colormap.
+    r"""Returns an NWS colormap.
     
       Color      dBZ
     "#04e9e7"    5
@@ -40,9 +48,15 @@ def radar_colormap():
     "#9854c6"    70
     "#4B0082"    75
     "#000000"    80
-
-    :return: cmap: ListedColormap. NWS-like radar colormap.
+    
+    Parameters
+    ----------
+        
+    Returns
+    -------
+    cmap: ListedColormap. NWS-like radar colormap.
     """ 
+ 
     nws_reflectivity_colors = [ "#ffffff", # 0
                                 "#04e9e7", # 5
                                 "#019ff4", # 10
@@ -67,15 +81,22 @@ def radar_colormap():
     return cmap
     
 def draw_box_plot(ax, img, cbar_shrink=0.35):
-    """Creates a pre-packaged display for indidivual or summary
+    r"""Creates a pre-packaged display for indidivual or summary
     svrimg images.  Modifies an input axis.
-
-    :param ax: pyplot axis. Modifiable axis.
-    :param cbar_shrink: float. Value between 0 - 1.  Will be replaced
-                               with kwargs in future for more 
-                               customization.
-    :return: ax: pyplot axis.  Modified axis.
+    
+    Parameters
+    ----------
+    ax: matplotlib.pyplot.axes.Axes
+        Modifiable matplotlib.pyplot axis.
+    cbar_shrink: numeric
+        Value between 0 - 1.  This will be replacedwith kwargs in 
+        future for more customization. Default is 0.35.
+    Returns
+    -------
+    ax: matplotlib.pyplot.axes.Axes
+        Modified matplotlib.pyplot axis.
     """ 
+
     cmap, norm = radar_norm()
     mmp = ax.imshow(np.flipud(img), cmap=cmap, norm=norm)
     ax.arrow(125.5, 119, 0, -0.0001, head_width=10, head_length=15, fc='k', ec='k', zorder=10)
@@ -95,12 +116,19 @@ def draw_box_plot(ax, img, cbar_shrink=0.35):
     return ax
     
 def draw_geography(ax):
-    """Creates a pre-packaged display for United States geography.  
+    r"""Creates a pre-packaged display for United States geography.  
     Modifies an input axis.
-
-    :param ax: pyplot axis. Modifiable axis.
-    :return: ax: pyplot axis.  Modified axis.
-    """
+    
+    Parameters
+    ----------
+    ax: matplotlib.pyplot.axes.Axes
+        Modifiable matplotlib.pyplot axis.
+        
+    Returns
+    -------
+    ax: matplotlib.pyplot.axes.Axes
+        Modified matplotlib.pyplot axis.
+    """ 
         
     countries_shp = shpreader.natural_earth(resolution='50m',
                                      category='cultural',
