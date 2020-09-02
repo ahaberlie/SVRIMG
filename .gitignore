@@ -15,7 +15,6 @@
 *.xml
 *.tif
 *.jpeg
-*.txt
 !*README.txt
 *.db
 *.nc
