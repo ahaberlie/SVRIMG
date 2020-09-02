@@ -2,13 +2,24 @@
 <h2>Radar Reflectivity Images Centered on Severe Weather Reports</h2>
 
 <h3>Dependencies</h3>
-<p>These Python packages are needed to run the code in this repository.</p>
+<p>These Python packages are required to run the utility code in this repository.</p>
 <lu>
 <li>numpy</li>
 <li>matplotlib</li>
 <li>pandas</li>
 <li>xarray</li>
 <li>imageio</li>
+</ul>
+</p>
+<p>These Python packages are suggested to run the jupyter notebook examples.</p>
+<lu>
+<li>jupyter notebook</li>
+<li>keras=2.3.1</li>
+<li>tensorflow-gpu=1.15.0</li>
+<li>cartopy=0.17.0</li>
+</ul>
+</p>
+
 <li>cartopy</li>
 <li>jupyter</li>
 <li>notebook</li>

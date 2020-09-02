@@ -9,11 +9,12 @@ import xarray as xr
 from imageio import imread
 import pickle
 
-def _parse_str(in_str, url="http://svrimg.org/data/raw_img/"):
+def _parse_str(in_str, url="http://svrimg.org/data/raw_img"):
     """Attempts to parse a string assuming it has some form 
     of datetime format. Returns a formatted base url directory 
     for monthly files. Function will fail if in_str is not 
-    datetime-like.
+    datetime-like. Formats that work include YYYYMMDDHHmm
+    and YYYYMMDD.
     
     :param in_str: str.  String with date information.
     :param url: str. Base url from which to access files. 
@@ -29,7 +30,7 @@ def _parse_str(in_str, url="http://svrimg.org/data/raw_img/"):
                                                       
     return f_url           
     
-def _write_img(p_dir, f_url, i_name):
+def _write_img(save_dir, url_dir, img_name):
     """Downloads an image from a given url and saves it 
     in a specified directory.
     
@@ -39,9 +40,9 @@ def _write_img(p_dir, f_url, i_name):
     :return: None
     """
     
-    file_url = f_url + i_name
+    file_url = url_dir + img_name
     img = urlopen(file_url)
-    with open(p_dir + i_name, "wb") as file:
+    with open(save_dir + img_name, "wb") as file:
         file.write(img.read())
                 
 def request_images(id_list, data_dir):
