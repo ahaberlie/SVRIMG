@@ -40,7 +40,7 @@ conda install numpy matplotlib pandas xarray imageio
 
 3) type the following ```python setup.py install```
 
-4) you now can import svrimg in Python
+4) you now can import ```svrimg``` in Python
 
 </p>
 
