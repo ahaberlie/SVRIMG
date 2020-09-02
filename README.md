@@ -33,11 +33,10 @@ conda install numpy matplotlib pandas xarray imageio
 
 <h3>Installing SVRIMG</h3>
 <p>
+
 1) clone the repository (git or GUI, either is fine)
 
-2) navigate to the project directory ("SVRIMG")
-
-2a) activate environments, etc.
+2) activate environments and navigate to the project directory ("SVRIMG")
 
 3) type the following ```python setup.py install```
 
