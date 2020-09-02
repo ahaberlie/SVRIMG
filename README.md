@@ -45,7 +45,7 @@ conda install numpy matplotlib pandas xarray imageio
 </p>
 <h3>Code Documentation</h3>
 <p>
-To see how you can use the ```svrimg``` package using Python, please examine the <a href=http://svrimg.org/documentation/">SVRIMG Documentation Page</a>
+To see how you can use the svrimg package using Python, please examine the <a href=http://svrimg.org/documentation/>SVRIMG Documentation Page</a>
 </p>
 <h3>Overview</h3>
 <p>
