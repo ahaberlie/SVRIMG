@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, '..')
-
 import logging
 from imageio import imread
 import numpy as np
