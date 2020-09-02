@@ -26,7 +26,7 @@ Note: The SVRIMG interface is still extremely new, and is likely to change. Do n
 </ul>
 </p>
 
-<p>Copy and paste the following commands into anaconda python command prompt with your environment activated and in the SVRIMG project folder to install the basic requirements.</a>
+<p>Copy and paste the following command into anaconda python command prompt with your environment activated and in the SVRIMG project folder to install the basic requirements.</a>
 
 ```
 pip install -r minimum_requirements.txt
