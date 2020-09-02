@@ -2,7 +2,6 @@ language: python
 python:
   - "3.6"
   - "3.7"
-  - "3.8"
 # command to install dependencies
 before_install:
   - python setup.py install
@@ -15,4 +14,4 @@ script:
   - pytest
   
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - codecov

@@ -1,6 +1,9 @@
 <h1><a href="http://www.svrimg.org">SVRIMG - SeVere Reflectivity IMaGe Dataset</a></h1>
 <h2>Radar Reflectivity Images Centered on Severe Weather Reports</h2>
 
+[![Build Status](https://travis-ci.com/ahaberlie/SVRIMG.svg?branch=master)](https://travis-ci.com/ahaberlie/SVRIMG)
+
+
 <h3>Dependencies</h3>
 <p>These Python packages are required to run the utility code in this repository.</p>
 <lu>
