@@ -1,13 +1,14 @@
 import logging
 from imageio import imread
 import numpy as np
+import os
 from numpy.testing import assert_equal, assert_almost_equal, assert_array_almost_equal, assert_array_equal
 
 from svrimg.utils.get_images import (_parse_str, _write_img, request_images, 
                                      get_img_list, geo_read_image, get_example_data, 
                                      read_image, get_example)
                                      
-test_data_dir = "../data/test/"                                    
+test_data_dir = os.environ.get('TEST_DATA_DIR')                                  
 
 def test_parse_str():
 

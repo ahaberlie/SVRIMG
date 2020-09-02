@@ -10,4 +10,6 @@ install:
   - pip install -r minimum_requirements.txt
 # command to run tests
 script:
+  - export TEST_DATA_DIR=${TRAVIS_BUILD_DIR}/data/test/;
+  - export NUMPY_EXPERIMENTAL_ARRAY_FUNCTION=1;
   - pytest
