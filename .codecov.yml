@@ -1,0 +1,22 @@
+codecov:
+  notify:
+    require_ci_to_pass: no
+
+coverage:
+  status:
+    patch:
+      default:
+        target: '80'
+    project:
+      library:
+        target: auto
+        threshold: 0.1%
+        paths:
+          - "src/svrimg/.*"
+
+      tests:
+        target: 100%
+        paths:
+          - "tests/.*"
+
+comment: off
