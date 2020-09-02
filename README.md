@@ -43,7 +43,10 @@ conda install numpy matplotlib pandas xarray imageio
 4) you now can import ```svrimg``` in Python
 
 </p>
-
+<h3>Code Documentation</h3>
+<p>
+To see how you can use the ```svrimg``` package using Python, please examine the <a href=http://svrimg.org/documentation/">SVRIMG Documentation Page</a>
+</p>
 <h3>Overview</h3>
 <p>
 The <a href="http://svrimg.org">SVRIMG website</a> provides a "one stop shop" for over 25,000 (and more to come) data rich, geospatial, radar reflectivity images centered on high-impact weather events. 

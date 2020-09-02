@@ -10,7 +10,7 @@ import xarray as xr
 import glob
 
 def get_index_table(in_str, data_dir, url="http://svrimg.org/data/"):
-    """Downloads svrimg index table from the given url and returns a pandas
+    r"""Downloads svrimg index table from the given url and returns a pandas
     DataFrame. If the table is already downloaded, it simply returns a pandas
     DataFrame.  Two download options are "all" for the entire 1996 - 2017
     index table, or a datetime-like string, where the index table for the
@@ -18,13 +18,22 @@ def get_index_table(in_str, data_dir, url="http://svrimg.org/data/"):
     string is not provided, the function will fail. This assumes that 
     'data_dir' exists.
     
-    :param in_str: str. Either "all" or a datetime-like string.
-    :param data_dir: str. Base directory in which to save the csv file.
-    :param url: str. Base url directory where the table data is located. 
-                     Default is "http://svrimg.org/data/".
-    :return: table_data: pandas DataFrame. A DataFrame containing svrimg
-                                           index information.
-    """                 
+    Parameters
+    ----------
+    in_str: str
+        Either "all" or a datetime-like string to specify the index 
+        table period. 
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is "http://svrimg.org/data/".
+        
+    Returns
+    -------
+    table_data: DataFrame
+        A pandas DataFrame containing svrimg index information.
+    """               
 
     if in_str == 'all':
         if not os.path.exists("{}/96-17_tor_utc_svrimg_index.csv".format(data_dir)):
@@ -58,17 +67,25 @@ def get_index_table(in_str, data_dir, url="http://svrimg.org/data/"):
             print(e, "Expected date string or 'all'")
 
 def get_svrgis_table(data_dir, url="http://svrimg.org/data/"):        
-    """Downloads svrgis index table from the given url and returns a pandas
+    r"""Downloads svrgis index table from the given url and returns a pandas
     DataFrame. If the table is already downloaded, it simply returns a pandas
     DataFrame.  The only download option is the entire 1996 - 2017
     dataset. This assumes that 'data_dir' exists.
-
-    :param data_dir: str. Base directory in which to save the csv file.
-    :param url: str. Base url directory where the table data is located. 
-                     Default is "http://svrimg.org/data/".
-    :return: table_data: pandas DataFrame. A DataFrame containing svrgis
-                                           severe report information.
-    """   
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str. Base url directory where the table data is located. 
+              Default is "http://svrimg.org/data/".
+        
+    Returns
+    -------
+    table_data: DataFrame
+        A pandas DataFrame A DataFrame containing svrgis severe report
+        information.
+    """  
+  
     if not os.path.exists("{}/96-17_tor_utc_gridrad.csv".format(data_dir)):
         
         _url = url + "96-17_tor_utc_gridrad.csv"
@@ -83,7 +100,7 @@ def get_svrgis_table(data_dir, url="http://svrimg.org/data/"):
 def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True, 
                     default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
                     remove_first_row=False):
-    """Either downloads example predictions if 'example' is true, or combines your prediction
+    r"""Either downloads example predictions if 'example' is true, or combines your prediction
     tables in 'data_dir' into one table using the default naming format of 
     '*_Table_*.csv' or whatever is passed into default_name. This will
     attempt to grab every year from 1996 - 2017, but will not fail if a year is missing. 
@@ -93,18 +110,30 @@ def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True,
     clicked something, you would go back and fix it.  Thus, the nth time is likely 
     more accurate.
     
-    :param data_dir: str. Base directory in which to save the csv file.
-    :param url: str. Base url directory where the table data is located. 
-                     Default is "http://svrimg.org/data/".
-    :param example: bool. If True, download example data.  If false, look for local 
-                          yearly tables. Default is True.
-    :param default_name: str. Naming format for local csv files. Stars are used as wildcards.
-                              Default is '*_Table_*.csv'.
-    :param csv_name: str. Default name of new csv file containing classifications.
-    :param remove_first_row: bool. Removes first row from each year of local table data 
-                                   if True, ignores first row if false. Default is False.
-    :return: csv. pandas DataFrame.  A DataFrame of UNIDs and their predictions.
-    """  
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is "http://svrimg.org/data/".
+    example: bool
+        If True, download example data.  If false, look for local 
+        yearly tables. Default is True.
+    default_name: str
+        Naming format for local csv files. Stars are used as wildcards.
+        Default is '*_Table_*.csv'.
+    csv_name: str
+        Default name of new csv file containing classifications.
+    remove_first_row: bool
+        Removes first row from each year of local table data if True, ignores 
+        first row if false. Default is False.    
+    Returns
+    -------
+    csv: DataFrame
+        A pandas DataFrame of UNIDs and their predictions.
+    """ 
+ 
     if example:
         if not os.path.exists("{}/{}.csv".format(data_dir, csv_name)):
             _url = url + "sample_classifications_96-17.csv"
@@ -127,15 +156,22 @@ def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True,
     return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
 
 def get_geog(data_dir, url="http://svrimg.org/maps/"):
-    """Downloads svrimg geography netcdf file from the given url and returns
+    r"""Downloads svrimg geography netcdf file from the given url and returns
     an xarray dataset. If the netcdf file is already downloaded, it simply 
     returns an xarray dataset.  This assumes that 'data_dir' exists.
     
-    :param data_dir: str. Base directory in which to save the csv file.
-    :param url: str. Base url directory where the table data is located. 
-                     Default is "http://svrimg.org/data/".
-    :return: geog. xarray dataset.  An xarray dataset representation of
-                                    the svrimg geography grid.
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is "http://svrimg.org/maps/".
+  
+    Returns
+    -------
+    geog: dataset
+        An xarray dataset representation of the svrimg geography grid.
     """  
 
     if not os.path.exists("{}/svrimg_geog.nc".format(data_dir)):

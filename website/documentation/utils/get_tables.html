@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.4" />
+<title>svrimg.utils.get_tables API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>svrimg.utils.get_tables</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from urllib.request import urlopen
+from dateutil.parser import parse
+import datetime
+import os
+import re
+import numpy as np 
+from urllib.error import HTTPError
+import pandas as pd
+import xarray as xr
+import glob
+
+def get_index_table(in_str, data_dir, url=&#34;http://svrimg.org/data/&#34;):
+    r&#34;&#34;&#34;Downloads svrimg index table from the given url and returns a pandas
+    DataFrame. If the table is already downloaded, it simply returns a pandas
+    DataFrame.  Two download options are &#34;all&#34; for the entire 1996 - 2017
+    index table, or a datetime-like string, where the index table for the
+    month containing the date is returned.  If &#34;all&#34; or a datetime-like
+    string is not provided, the function will fail. This assumes that 
+    &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    in_str: str
+        Either &#34;all&#34; or a datetime-like string to specify the index 
+        table period. 
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is &#34;http://svrimg.org/data/&#34;.
+        
+    Returns
+    -------
+    table_data: DataFrame
+        A pandas DataFrame containing svrimg index information.
+    &#34;&#34;&#34;               
+
+    if in_str == &#39;all&#39;:
+        if not os.path.exists(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir)):
+        
+            _url = url + &#34;96-17_tor_utc_svrimg_index.csv&#34;
+            
+            c = pd.read_csv(_url, index_col=&#39;unid&#39;)
+            c.to_csv(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir))
+            return c
+        else:
+            #print(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir), &#34;is already downloaded&#34;)
+            return pd.read_csv(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir), index_col=&#39;unid&#39;)
+    else:
+        try:
+            date = parse(in_str)
+
+            fname = &#34;report_box_indexer_{:02d}.csv&#34;.format(date.month)
+                                                           
+            if not os.path.exists(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname)):
+                _url = &#34;{}/raw_img/{}/{}&#34;.format(url, date.year, fname)
+                print(_url)
+                c = pd.read_csv(_url, index_col=&#39;unid&#39;)
+                c.to_csv(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname))
+                return c
+            else:
+                #print(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname), &#34;is already downloaded&#34;)
+                
+                return pd.read_csv(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname), index_col=&#39;unid&#39;)
+                
+        except Exception as e:
+            print(e, &#34;Expected date string or &#39;all&#39;&#34;)
+
+def get_svrgis_table(data_dir, url=&#34;http://svrimg.org/data/&#34;):        
+    r&#34;&#34;&#34;Downloads svrgis index table from the given url and returns a pandas
+    DataFrame. If the table is already downloaded, it simply returns a pandas
+    DataFrame.  The only download option is the entire 1996 - 2017
+    dataset. This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str. Base url directory where the table data is located. 
+              Default is &#34;http://svrimg.org/data/&#34;.
+        
+    Returns
+    -------
+    table_data: DataFrame
+        A pandas DataFrame A DataFrame containing svrgis severe report
+        information.
+    &#34;&#34;&#34;  
+  
+    if not os.path.exists(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir)):
+        
+        _url = url + &#34;96-17_tor_utc_gridrad.csv&#34;
+        
+        c = pd.read_csv(_url, index_col=&#39;uid&#39;)
+        c.to_csv(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir))
+        return c
+    else:
+        #print(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir), &#34;is already downloaded&#34;)
+        return pd.read_csv(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir), index_col=&#39;uid&#39;)            
+        
+def get_pred_tables(data_dir, url=&#34;http://svrimg.org/data/&#34;, example=True, 
+                    default_name=&#34;*_Table_*.csv&#34;, csv_name=&#34;eg_classes_96-17&#34;,
+                    remove_first_row=False):
+    r&#34;&#34;&#34;Either downloads example predictions if &#39;example&#39; is true, or combines your prediction
+    tables in &#39;data_dir&#39; into one table using the default naming format of 
+    &#39;*_Table_*.csv&#39; or whatever is passed into default_name. This will
+    attempt to grab every year from 1996 - 2017, but will not fail if a year is missing. 
+    By default, the first row in every year&#39;s table is example data on svrimg.org, and 
+    it can be removed as long as &#39;remove_first_row&#39; is True. By default, if there is a 
+    repeated UNID, the last one is kept.  The theory here is that if you accidentally 
+    clicked something, you would go back and fix it.  Thus, the nth time is likely 
+    more accurate.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is &#34;http://svrimg.org/data/&#34;.
+    example: bool
+        If True, download example data.  If false, look for local 
+        yearly tables. Default is True.
+    default_name: str
+        Naming format for local csv files. Stars are used as wildcards.
+        Default is &#39;*_Table_*.csv&#39;.
+    csv_name: str
+        Default name of new csv file containing classifications.
+    remove_first_row: bool
+        Removes first row from each year of local table data if True, ignores 
+        first row if false. Default is False.    
+    Returns
+    -------
+    csv: DataFrame
+        A pandas DataFrame of UNIDs and their predictions.
+    &#34;&#34;&#34; 
+ 
+    if example:
+        if not os.path.exists(&#34;{}/{}.csv&#34;.format(data_dir, csv_name)):
+            _url = url + &#34;sample_classifications_96-17.csv&#34;
+            c = pd.read_csv(_url, index_col=&#39;UNID&#39;)
+            c.to_csv(&#34;{}/{}.csv&#34;.format(data_dir, csv_name))
+    else:
+        csvs = []
+        for fname in glob.glob(data_dir + &#34;*_Table_*.csv&#34;):
+        
+            print(&#34;Reading&#34;, fname)
+            
+            a = pd.read_csv(fname)
+            a = a.drop(0)
+            a = a.drop_duplicates(subset=[&#34;UNID&#34;], keep=&#39;last&#39;)
+            a = a.set_index(&#34;UNID&#34;)
+            csvs.append(a)
+        csvs = pd.concat(csvs)
+        csvs.to_csv(&#34;{}/{}.csv&#34;.format(data_dir, csv_name))
+            
+    return pd.read_csv(&#34;{}/{}.csv&#34;.format(data_dir, csv_name), index_col=&#39;UNID&#39;)
+
+def get_geog(data_dir, url=&#34;http://svrimg.org/maps/&#34;):
+    r&#34;&#34;&#34;Downloads svrimg geography netcdf file from the given url and returns
+    an xarray dataset. If the netcdf file is already downloaded, it simply 
+    returns an xarray dataset.  This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is &#34;http://svrimg.org/maps/&#34;.
+  
+    Returns
+    -------
+    geog: dataset
+        An xarray dataset representation of the svrimg geography grid.
+    &#34;&#34;&#34;  
+
+    if not os.path.exists(&#34;{}/svrimg_geog.nc&#34;.format(data_dir)):
+        
+        _url = url + &#34;svrimg_geog.nc&#34;
+        
+        img = urlopen(_url)
+
+        with open(&#34;{}/svrimg_geog.nc&#34;.format(data_dir), &#34;wb&#34;) as file:
+            file.write(img.read())
+        
+        return xr.open_dataset(&#34;{}/svrimg_geog.nc&#34;.format(data_dir))
+    else:
+        #print(&#34;{}/svrimg_geog.nc&#34;.format(data_dir), &#34;is already downloaded&#34;)
+        return xr.open_dataset(&#34;{}/svrimg_geog.nc&#34;.format(data_dir))
+        </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="svrimg.utils.get_tables.get_geog"><code class="name flex">
+<span>def <span class="ident">get_geog</span></span>(<span>data_dir, url='http://svrimg.org/maps/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads svrimg geography netcdf file from the given url and returns
+an xarray dataset. If the netcdf file is already downloaded, it simply
+returns an xarray dataset.
+This assumes that 'data_dir' exists.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the csv file.</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base url directory where the table data is located.
+Default is "http://svrimg.org/maps/".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>geog</code></strong> :&ensp;<code>dataset</code></dt>
+<dd>An xarray dataset representation of the svrimg geography grid.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_geog(data_dir, url=&#34;http://svrimg.org/maps/&#34;):
+    r&#34;&#34;&#34;Downloads svrimg geography netcdf file from the given url and returns
+    an xarray dataset. If the netcdf file is already downloaded, it simply 
+    returns an xarray dataset.  This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is &#34;http://svrimg.org/maps/&#34;.
+  
+    Returns
+    -------
+    geog: dataset
+        An xarray dataset representation of the svrimg geography grid.
+    &#34;&#34;&#34;  
+
+    if not os.path.exists(&#34;{}/svrimg_geog.nc&#34;.format(data_dir)):
+        
+        _url = url + &#34;svrimg_geog.nc&#34;
+        
+        img = urlopen(_url)
+
+        with open(&#34;{}/svrimg_geog.nc&#34;.format(data_dir), &#34;wb&#34;) as file:
+            file.write(img.read())
+        
+        return xr.open_dataset(&#34;{}/svrimg_geog.nc&#34;.format(data_dir))
+    else:
+        #print(&#34;{}/svrimg_geog.nc&#34;.format(data_dir), &#34;is already downloaded&#34;)
+        return xr.open_dataset(&#34;{}/svrimg_geog.nc&#34;.format(data_dir))</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_tables.get_index_table"><code class="name flex">
+<span>def <span class="ident">get_index_table</span></span>(<span>in_str, data_dir, url='http://svrimg.org/data/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads svrimg index table from the given url and returns a pandas
+DataFrame. If the table is already downloaded, it simply returns a pandas
+DataFrame.
+Two download options are "all" for the entire 1996 - 2017
+index table, or a datetime-like string, where the index table for the
+month containing the date is returned.
+If "all" or a datetime-like
+string is not provided, the function will fail. This assumes that
+'data_dir' exists.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>in_str</code></strong> :&ensp;<code>str</code></dt>
+<dd>Either "all" or a datetime-like string to specify the index
+table period.</dd>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the csv file.</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base url directory where the table data is located.
+Default is "http://svrimg.org/data/".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>table_data</code></strong> :&ensp;<code>DataFrame</code></dt>
+<dd>A pandas DataFrame containing svrimg index information.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_index_table(in_str, data_dir, url=&#34;http://svrimg.org/data/&#34;):
+    r&#34;&#34;&#34;Downloads svrimg index table from the given url and returns a pandas
+    DataFrame. If the table is already downloaded, it simply returns a pandas
+    DataFrame.  Two download options are &#34;all&#34; for the entire 1996 - 2017
+    index table, or a datetime-like string, where the index table for the
+    month containing the date is returned.  If &#34;all&#34; or a datetime-like
+    string is not provided, the function will fail. This assumes that 
+    &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    in_str: str
+        Either &#34;all&#34; or a datetime-like string to specify the index 
+        table period. 
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is &#34;http://svrimg.org/data/&#34;.
+        
+    Returns
+    -------
+    table_data: DataFrame
+        A pandas DataFrame containing svrimg index information.
+    &#34;&#34;&#34;               
+
+    if in_str == &#39;all&#39;:
+        if not os.path.exists(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir)):
+        
+            _url = url + &#34;96-17_tor_utc_svrimg_index.csv&#34;
+            
+            c = pd.read_csv(_url, index_col=&#39;unid&#39;)
+            c.to_csv(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir))
+            return c
+        else:
+            #print(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir), &#34;is already downloaded&#34;)
+            return pd.read_csv(&#34;{}/96-17_tor_utc_svrimg_index.csv&#34;.format(data_dir), index_col=&#39;unid&#39;)
+    else:
+        try:
+            date = parse(in_str)
+
+            fname = &#34;report_box_indexer_{:02d}.csv&#34;.format(date.month)
+                                                           
+            if not os.path.exists(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname)):
+                _url = &#34;{}/raw_img/{}/{}&#34;.format(url, date.year, fname)
+                print(_url)
+                c = pd.read_csv(_url, index_col=&#39;unid&#39;)
+                c.to_csv(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname))
+                return c
+            else:
+                #print(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname), &#34;is already downloaded&#34;)
+                
+                return pd.read_csv(&#34;{}/{}_{}&#34;.format(data_dir, date.year, fname), index_col=&#39;unid&#39;)
+                
+        except Exception as e:
+            print(e, &#34;Expected date string or &#39;all&#39;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_tables.get_pred_tables"><code class="name flex">
+<span>def <span class="ident">get_pred_tables</span></span>(<span>data_dir, url='http://svrimg.org/data/', example=True, default_name='*_Table_*.csv', csv_name='eg_classes_96-17', remove_first_row=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Either downloads example predictions if 'example' is true, or combines your prediction
+tables in 'data_dir' into one table using the default naming format of
+'<em><em>Table</em></em>.csv' or whatever is passed into default_name. This will
+attempt to grab every year from 1996 - 2017, but will not fail if a year is missing.
+By default, the first row in every year's table is example data on svrimg.org, and
+it can be removed as long as 'remove_first_row' is True. By default, if there is a
+repeated UNID, the last one is kept.
+The theory here is that if you accidentally
+clicked something, you would go back and fix it.
+Thus, the nth time is likely
+more accurate.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the csv file.</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base url directory where the table data is located.
+Default is "http://svrimg.org/data/".</dd>
+<dt><strong><code>example</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True, download example data.
+If false, look for local
+yearly tables. Default is True.</dd>
+<dt><strong><code>default_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Naming format for local csv files. Stars are used as wildcards.
+Default is '<em><em>Table</em></em>.csv'.</dd>
+<dt><strong><code>csv_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Default name of new csv file containing classifications.</dd>
+<dt><strong><code>remove_first_row</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Removes first row from each year of local table data if True, ignores
+first row if false. Default is False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>csv</code></strong> :&ensp;<code>DataFrame</code></dt>
+<dd>A pandas DataFrame of UNIDs and their predictions.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_pred_tables(data_dir, url=&#34;http://svrimg.org/data/&#34;, example=True, 
+                    default_name=&#34;*_Table_*.csv&#34;, csv_name=&#34;eg_classes_96-17&#34;,
+                    remove_first_row=False):
+    r&#34;&#34;&#34;Either downloads example predictions if &#39;example&#39; is true, or combines your prediction
+    tables in &#39;data_dir&#39; into one table using the default naming format of 
+    &#39;*_Table_*.csv&#39; or whatever is passed into default_name. This will
+    attempt to grab every year from 1996 - 2017, but will not fail if a year is missing. 
+    By default, the first row in every year&#39;s table is example data on svrimg.org, and 
+    it can be removed as long as &#39;remove_first_row&#39; is True. By default, if there is a 
+    repeated UNID, the last one is kept.  The theory here is that if you accidentally 
+    clicked something, you would go back and fix it.  Thus, the nth time is likely 
+    more accurate.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str
+        Base url directory where the table data is located. 
+        Default is &#34;http://svrimg.org/data/&#34;.
+    example: bool
+        If True, download example data.  If false, look for local 
+        yearly tables. Default is True.
+    default_name: str
+        Naming format for local csv files. Stars are used as wildcards.
+        Default is &#39;*_Table_*.csv&#39;.
+    csv_name: str
+        Default name of new csv file containing classifications.
+    remove_first_row: bool
+        Removes first row from each year of local table data if True, ignores 
+        first row if false. Default is False.    
+    Returns
+    -------
+    csv: DataFrame
+        A pandas DataFrame of UNIDs and their predictions.
+    &#34;&#34;&#34; 
+ 
+    if example:
+        if not os.path.exists(&#34;{}/{}.csv&#34;.format(data_dir, csv_name)):
+            _url = url + &#34;sample_classifications_96-17.csv&#34;
+            c = pd.read_csv(_url, index_col=&#39;UNID&#39;)
+            c.to_csv(&#34;{}/{}.csv&#34;.format(data_dir, csv_name))
+    else:
+        csvs = []
+        for fname in glob.glob(data_dir + &#34;*_Table_*.csv&#34;):
+        
+            print(&#34;Reading&#34;, fname)
+            
+            a = pd.read_csv(fname)
+            a = a.drop(0)
+            a = a.drop_duplicates(subset=[&#34;UNID&#34;], keep=&#39;last&#39;)
+            a = a.set_index(&#34;UNID&#34;)
+            csvs.append(a)
+        csvs = pd.concat(csvs)
+        csvs.to_csv(&#34;{}/{}.csv&#34;.format(data_dir, csv_name))
+            
+    return pd.read_csv(&#34;{}/{}.csv&#34;.format(data_dir, csv_name), index_col=&#39;UNID&#39;)</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_tables.get_svrgis_table"><code class="name flex">
+<span>def <span class="ident">get_svrgis_table</span></span>(<span>data_dir, url='http://svrimg.org/data/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads svrgis index table from the given url and returns a pandas
+DataFrame. If the table is already downloaded, it simply returns a pandas
+DataFrame.
+The only download option is the entire 1996 - 2017
+dataset. This assumes that 'data_dir' exists.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the csv file.</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str. Base url directory where the table data is located. </code></dt>
+<dd>Default is "http://svrimg.org/data/".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>table_data</code></strong> :&ensp;<code>DataFrame</code></dt>
+<dd>A pandas DataFrame A DataFrame containing svrgis severe report
+information.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_svrgis_table(data_dir, url=&#34;http://svrimg.org/data/&#34;):        
+    r&#34;&#34;&#34;Downloads svrgis index table from the given url and returns a pandas
+    DataFrame. If the table is already downloaded, it simply returns a pandas
+    DataFrame.  The only download option is the entire 1996 - 2017
+    dataset. This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the csv file.
+    url: str. Base url directory where the table data is located. 
+              Default is &#34;http://svrimg.org/data/&#34;.
+        
+    Returns
+    -------
+    table_data: DataFrame
+        A pandas DataFrame A DataFrame containing svrgis severe report
+        information.
+    &#34;&#34;&#34;  
+  
+    if not os.path.exists(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir)):
+        
+        _url = url + &#34;96-17_tor_utc_gridrad.csv&#34;
+        
+        c = pd.read_csv(_url, index_col=&#39;uid&#39;)
+        c.to_csv(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir))
+        return c
+    else:
+        #print(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir), &#34;is already downloaded&#34;)
+        return pd.read_csv(&#34;{}/96-17_tor_utc_gridrad.csv&#34;.format(data_dir), index_col=&#39;uid&#39;)            </code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="svrimg.utils" href="index.html">svrimg.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="svrimg.utils.get_tables.get_geog" href="#svrimg.utils.get_tables.get_geog">get_geog</a></code></li>
+<li><code><a title="svrimg.utils.get_tables.get_index_table" href="#svrimg.utils.get_tables.get_index_table">get_index_table</a></code></li>
+<li><code><a title="svrimg.utils.get_tables.get_pred_tables" href="#svrimg.utils.get_tables.get_pred_tables">get_pred_tables</a></code></li>
+<li><code><a title="svrimg.utils.get_tables.get_svrgis_table" href="#svrimg.utils.get_tables.get_svrgis_table">get_svrgis_table</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
+</footer>
+</body>
+</html>

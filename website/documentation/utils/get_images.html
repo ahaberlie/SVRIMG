@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.4" />
+<title>svrimg.utils.get_images API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>svrimg.utils.get_images</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from urllib.request import urlopen
+from dateutil.parser import parse
+import datetime
+import os
+import re
+import numpy as np 
+from urllib.error import HTTPError
+import xarray as xr
+from imageio import imread
+import pickle
+
+def _parse_str(in_str, url=&#34;http://svrimg.org/data/raw_img&#34;):
+    r&#34;&#34;&#34;Attempts to parse a string assuming it has some form 
+    of datetime format. Returns a formatted base url directory 
+    for monthly files. Function will fail if in_str is not 
+    datetime-like. Formats that work include YYYYMMDDHHmm
+    and YYYYMMDD.
+    
+    Parameters
+    ----------
+    in_str: str
+        String with date information.
+    url: dictionary
+        Base url from which to access files. 
+        Default = &#34;http://svrimg.org/data/raw_img/&#34;
+    Returns
+    -------
+    file_url: str
+        Base url for monthly file directory.
+    &#34;&#34;&#34;
+
+    date = parse(in_str)
+    yr = date.year
+    mo = date.month
+    
+    file_url = &#34;{}/{}/{:02d}/&#34;.format(url, yr, mo)
+                                                      
+    return file_url           
+    
+def _write_img(save_dir, url_dir, img_name):
+    r&#34;&#34;&#34;Downloads an image from a given url and saves it 
+    in a specified directory.
+    
+    Parameters
+    ----------
+    save_dir: str
+        Directory in which to save the image.
+    url_dir: str
+        Base url from which to access files.
+    img_name: str
+        Image filename.
+    &#34;&#34;&#34;
+    
+    file_url = url_dir + img_name
+    img = urlopen(file_url)
+    with open(save_dir + img_name, &#34;wb&#34;) as file:
+        file.write(img.read())
+                
+def request_images(id_list, data_dir):
+    r&#34;&#34;&#34;Downloads images and saves them based on a list of unique identifiers. 
+    If the images are already downloaded, this function just returns the file 
+    location of the image. This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    id_list: list
+        List of unique svrimg identifiers.
+    data_dir: str
+        Base url from which to access files. 
+        Default is &#34;http://svrimg.org/data/raw_img/&#34;
+    Returns
+    -------
+    loc: dict
+        A dictionary of unique identifiers and where the 
+        affiliated file was saved.
+    &#34;&#34;&#34;
+    
+    file_locs = {}
+    
+    if type(id_list) == list or type(id_list) == np.ndarray:
+
+        for img_name in id_list:
+
+            folder_url = _parse_str(img_name[:12])
+            
+            year = img_name[:4]
+            parent_dir = &#34;{}/{}/&#34;.format(data_dir, year)
+            
+            if not os.path.exists(parent_dir + img_name + &#34;.png&#34;):
+                if not os.path.exists(parent_dir):
+                    os.makedirs(parent_dir)
+                try:
+                    _write_img(parent_dir, folder_url, img_name + &#34;.png&#34;)
+                    file_locs[img_name] = parent_dir + img_name + &#34;.png&#34;
+                except HTTPError as e:
+                    print(e, parent_dir + img_name + &#34;.png&#34;)
+                    file_locs[img_name] = &#34;Missing&#34;
+            else:
+                #print(parent_dir + img_name + &#34;.png&#34;, &#34;Exists!&#34;)
+                file_locs[img_name] = parent_dir + img_name + &#34;.png&#34;
+
+    return file_locs
+    
+def get_img_list(id_list, data_dir, keep_missing=False):
+    r&#34;&#34;&#34;Downloads images and saves them based on a list of unique identifiers. 
+    If the images are already downloaded, the file is not downloaded. The
+    function then takes the images and puts them into a list. The order is 
+    not guaranteed to be the same as the input list. This assumes that 
+    &#39;data_dir&#39; exists.  If keep_missing is true, insert blank image into
+    the stack.
+    
+    Parameters
+    ----------
+    id_list: list
+        List of unique svrimg identifiers.
+    data_dir: str
+        Base directory in which to save the images. 
+    Returns
+    -------
+    images: (N, Y, X) ndarray
+        A list of images corresponding to the given
+        id_list.
+    &#34;&#34;&#34;
+
+    loc = request_images(id_list, data_dir)
+    images = []
+
+    for unid, file in loc.items():
+        if file != &#34;Missing&#34;:
+            images.append(read_image(file))
+        else:
+            if keep_missing:
+                images.append(np.zeros((136, 136), dtype=np.uint8))
+                print(unid, &#34; is missing an image file. Inserted blank image because keep_missing is True.&#34;)
+            else:
+                print(unid, &#34; is missing an image file. Did not insert blank image because keep_missing is False.&#34;)
+            
+    images = np.array(images)
+    
+    return images
+    
+def geo_read_image(index, locator, uid, x_=1399, y_=899):
+    r&#34;&#34;&#34;Read an image based on a unique identifier, and place the image
+    within the original grid.  Requires an svrimg index table that 
+    can be accessed from the function get_index_tables in utils.get_tables.
+    
+    Parameters
+    ----------
+    index: DataFrame
+        A svrimg index table that contains information
+        on the requested image.
+    locator: dict
+        Lookup table for file locations based on a given
+        unique svrimg id.
+    uid: str
+        Unique svrimg id.
+    x_: int
+        Size of x dimension of original grid. Default is 1399.
+    y_: int
+        Size of y dimension of original grid. Default is 899.
+    Returns
+    -------
+    canvas: (y_, x_) ndarray
+        A ndarray of the dimensions of (y_, x_) with all zeroes 
+        except the location where the image identified with
+        &#39;uid&#39; was extracted from.
+    &#34;&#34;&#34;
+
+    row = index.loc[uid]
+    im = read_image(locator[uid])
+    canvas = np.zeros(shape=(y_, x_))
+    canvas[row.ymin:row.ymax+1, row.xmin:row.xmax+1] = im
+    
+    return canvas
+    
+def get_example_data(data_type, data_dir=&#34;../data/pkls/&#34;, 
+                     url=&#34;http://svrimg.org/data/classifications/&#34;):
+    r&#34;&#34;&#34;Returns training, validation, or testing data, depending on the
+    value of &#39;data_type&#39;.  This function attempts to download the data
+    if the file does not exist in &#39;data_dir&#39;.  Returns x and y data
+    for each subset.
+    
+    Parameters
+    ----------
+    data_type: str
+        Request &#39;training&#39;, &#39;validation&#39;, or &#39;testing&#39; data.
+    data_dir: str
+        Base directory in which to save the netcdf file. Default
+        is &#34;../data/pkls/&#34;.
+    url: str
+        Base url directory where the example data are located. Default
+        is &#34;http://svrimg.org/data/classifications/&#34;.
+    x_: int
+        Size of x dimension of original grid. Default is 1399.
+    y_: int
+        Size of y dimension of original grid. Default is 899.
+    Returns
+    -------
+    x_y_data: ndarray
+        A ndarray where the first dimension is a list of images, 
+        and the second dimension is a list of classifications.
+    &#34;&#34;&#34;
+
+    if data_type == &#39;training&#39;:
+        loc = &#34;{}/1996_2011_train.pkl&#34;.format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + &#34;1996_2011_train.pkl&#34;
+            pkl = urlopen(_url)
+            with open(loc, &#34;wb&#34;) as file:
+                file.write(pkl.read())
+    elif data_type == &#39;validation&#39;:
+        loc = &#34;{}/2012_2013_validation.pkl&#34;.format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + &#34;2012_2013_validation.pkl&#34;
+            pkl = urlopen(_url)
+            with open(loc, &#34;wb&#34;) as file:
+                file.write(pkl.read())
+      
+    elif data_type == &#39;testing&#39;:
+        loc = &#34;{}/2014_2017_test.pkl&#34;.format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + &#34;2014_2017_test.pkl&#34;
+            pkl = urlopen(_url)
+            with open(loc, &#34;wb&#34;) as file:
+                file.write(pkl.read())
+    else:
+        print(&#34;Expected training, validation, or testing&#34;)
+        return None
+    return pickle.load(open(loc, &#34;rb&#34;))   
+
+
+def read_image(filename):
+    r&#34;&#34;&#34;Read and return raw image information based on a given filename.
+    pilmode is &#34;P&#34;, which allows the retrieval of actual data and not
+    RGB intensity information.
+    
+    Parameters
+    ----------
+    filename: str
+        File from which to read image information.
+
+    Returns
+    -------
+    image: (M, N) ndarray
+        An ndarray representation of the image
+    &#34;&#34;&#34;
+
+    return imread(filename, pilmode=&#39;P&#39;)
+    
+def get_example(data_dir=&#34;../data/example/&#34;, url=&#34;http://svrimg.org/data/&#34;):
+    r&#34;&#34;&#34;Downloads an interpolated GridRad (gridrad.org) file from a url and
+    returns an xarray dataset representation from April 27th at 1900 UTC.  
+    If the file is already downloaded, it simply returns an xarray dataset 
+    representation. This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the netcdf file. Default
+        is &#34;../data/example/&#34;.
+    url: str
+        Base url directory where the example data is located. Default
+        is &#34;http://svrimg.org/data/&#34;.
+
+    Returns
+    -------
+    gridrad: dataset
+        An xarray dataset representation of interpolated GridRad 
+        data on April 27th at 1900 UTC.
+    &#34;&#34;&#34;
+
+    if not os.path.exists(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir)):
+        
+        _url = url + &#34;nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;
+        
+        img = urlopen(_url)
+
+        with open(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir), &#34;wb&#34;) as file:
+            file.write(img.read())
+        
+        return xr.open_dataset(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir))
+    else:
+        #print(&#34;{}nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir), &#34;is already downloaded&#34;)
+        return xr.open_dataset(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="svrimg.utils.get_images.geo_read_image"><code class="name flex">
+<span>def <span class="ident">geo_read_image</span></span>(<span>index, locator, uid, x_=1399, y_=899)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read an image based on a unique identifier, and place the image
+within the original grid.
+Requires an svrimg index table that
+can be accessed from the function get_index_tables in utils.get_tables.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>index</code></strong> :&ensp;<code>DataFrame</code></dt>
+<dd>A svrimg index table that contains information
+on the requested image.</dd>
+<dt><strong><code>locator</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Lookup table for file locations based on a given
+unique svrimg id.</dd>
+<dt><strong><code>uid</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique svrimg id.</dd>
+<dt><strong><code>x_</code></strong> :&ensp;<code>int</code></dt>
+<dd>Size of x dimension of original grid. Default is 1399.</dd>
+<dt><strong><code>y_</code></strong> :&ensp;<code>int</code></dt>
+<dd>Size of y dimension of original grid. Default is 899.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>canvas</code></strong> :&ensp;<code>(y_, x_) ndarray</code></dt>
+<dd>A ndarray of the dimensions of (y_, x_) with all zeroes
+except the location where the image identified with
+'uid' was extracted from.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def geo_read_image(index, locator, uid, x_=1399, y_=899):
+    r&#34;&#34;&#34;Read an image based on a unique identifier, and place the image
+    within the original grid.  Requires an svrimg index table that 
+    can be accessed from the function get_index_tables in utils.get_tables.
+    
+    Parameters
+    ----------
+    index: DataFrame
+        A svrimg index table that contains information
+        on the requested image.
+    locator: dict
+        Lookup table for file locations based on a given
+        unique svrimg id.
+    uid: str
+        Unique svrimg id.
+    x_: int
+        Size of x dimension of original grid. Default is 1399.
+    y_: int
+        Size of y dimension of original grid. Default is 899.
+    Returns
+    -------
+    canvas: (y_, x_) ndarray
+        A ndarray of the dimensions of (y_, x_) with all zeroes 
+        except the location where the image identified with
+        &#39;uid&#39; was extracted from.
+    &#34;&#34;&#34;
+
+    row = index.loc[uid]
+    im = read_image(locator[uid])
+    canvas = np.zeros(shape=(y_, x_))
+    canvas[row.ymin:row.ymax+1, row.xmin:row.xmax+1] = im
+    
+    return canvas</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_images.get_example"><code class="name flex">
+<span>def <span class="ident">get_example</span></span>(<span>data_dir='../data/example/', url='http://svrimg.org/data/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads an interpolated GridRad (gridrad.org) file from a url and
+returns an xarray dataset representation from April 27th at 1900 UTC.<br>
+If the file is already downloaded, it simply returns an xarray dataset
+representation. This assumes that 'data_dir' exists.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the netcdf file. Default
+is "../data/example/".</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base url directory where the example data is located. Default
+is "http://svrimg.org/data/".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>gridrad</code></strong> :&ensp;<code>dataset</code></dt>
+<dd>An xarray dataset representation of interpolated GridRad
+data on April 27th at 1900 UTC.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_example(data_dir=&#34;../data/example/&#34;, url=&#34;http://svrimg.org/data/&#34;):
+    r&#34;&#34;&#34;Downloads an interpolated GridRad (gridrad.org) file from a url and
+    returns an xarray dataset representation from April 27th at 1900 UTC.  
+    If the file is already downloaded, it simply returns an xarray dataset 
+    representation. This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    data_dir: str
+        Base directory in which to save the netcdf file. Default
+        is &#34;../data/example/&#34;.
+    url: str
+        Base url directory where the example data is located. Default
+        is &#34;http://svrimg.org/data/&#34;.
+
+    Returns
+    -------
+    gridrad: dataset
+        An xarray dataset representation of interpolated GridRad 
+        data on April 27th at 1900 UTC.
+    &#34;&#34;&#34;
+
+    if not os.path.exists(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir)):
+        
+        _url = url + &#34;nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;
+        
+        img = urlopen(_url)
+
+        with open(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir), &#34;wb&#34;) as file:
+            file.write(img.read())
+        
+        return xr.open_dataset(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir))
+    else:
+        #print(&#34;{}nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir), &#34;is already downloaded&#34;)
+        return xr.open_dataset(&#34;{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc&#34;.format(data_dir))</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_images.get_example_data"><code class="name flex">
+<span>def <span class="ident">get_example_data</span></span>(<span>data_type, data_dir='../data/pkls/', url='http://svrimg.org/data/classifications/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns training, validation, or testing data, depending on the
+value of 'data_type'.
+This function attempts to download the data
+if the file does not exist in 'data_dir'.
+Returns x and y data
+for each subset.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>Request 'training', 'validation', or 'testing' data.</dd>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the netcdf file. Default
+is "../data/pkls/".</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base url directory where the example data are located. Default
+is "http://svrimg.org/data/classifications/".</dd>
+<dt><strong><code>x_</code></strong> :&ensp;<code>int</code></dt>
+<dd>Size of x dimension of original grid. Default is 1399.</dd>
+<dt><strong><code>y_</code></strong> :&ensp;<code>int</code></dt>
+<dd>Size of y dimension of original grid. Default is 899.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>x_y_data</code></strong> :&ensp;<code>ndarray</code></dt>
+<dd>A ndarray where the first dimension is a list of images,
+and the second dimension is a list of classifications.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_example_data(data_type, data_dir=&#34;../data/pkls/&#34;, 
+                     url=&#34;http://svrimg.org/data/classifications/&#34;):
+    r&#34;&#34;&#34;Returns training, validation, or testing data, depending on the
+    value of &#39;data_type&#39;.  This function attempts to download the data
+    if the file does not exist in &#39;data_dir&#39;.  Returns x and y data
+    for each subset.
+    
+    Parameters
+    ----------
+    data_type: str
+        Request &#39;training&#39;, &#39;validation&#39;, or &#39;testing&#39; data.
+    data_dir: str
+        Base directory in which to save the netcdf file. Default
+        is &#34;../data/pkls/&#34;.
+    url: str
+        Base url directory where the example data are located. Default
+        is &#34;http://svrimg.org/data/classifications/&#34;.
+    x_: int
+        Size of x dimension of original grid. Default is 1399.
+    y_: int
+        Size of y dimension of original grid. Default is 899.
+    Returns
+    -------
+    x_y_data: ndarray
+        A ndarray where the first dimension is a list of images, 
+        and the second dimension is a list of classifications.
+    &#34;&#34;&#34;
+
+    if data_type == &#39;training&#39;:
+        loc = &#34;{}/1996_2011_train.pkl&#34;.format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + &#34;1996_2011_train.pkl&#34;
+            pkl = urlopen(_url)
+            with open(loc, &#34;wb&#34;) as file:
+                file.write(pkl.read())
+    elif data_type == &#39;validation&#39;:
+        loc = &#34;{}/2012_2013_validation.pkl&#34;.format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + &#34;2012_2013_validation.pkl&#34;
+            pkl = urlopen(_url)
+            with open(loc, &#34;wb&#34;) as file:
+                file.write(pkl.read())
+      
+    elif data_type == &#39;testing&#39;:
+        loc = &#34;{}/2014_2017_test.pkl&#34;.format(data_dir)
+        if not os.path.exists(loc):
+            _url = url + &#34;2014_2017_test.pkl&#34;
+            pkl = urlopen(_url)
+            with open(loc, &#34;wb&#34;) as file:
+                file.write(pkl.read())
+    else:
+        print(&#34;Expected training, validation, or testing&#34;)
+        return None
+    return pickle.load(open(loc, &#34;rb&#34;))   </code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_images.get_img_list"><code class="name flex">
+<span>def <span class="ident">get_img_list</span></span>(<span>id_list, data_dir, keep_missing=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads images and saves them based on a list of unique identifiers.
+If the images are already downloaded, the file is not downloaded. The
+function then takes the images and puts them into a list. The order is
+not guaranteed to be the same as the input list. This assumes that
+'data_dir' exists.
+If keep_missing is true, insert blank image into
+the stack.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>id_list</code></strong> :&ensp;<code>list</code></dt>
+<dd>List of unique svrimg identifiers.</dd>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base directory in which to save the images.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>images</code></strong> :&ensp;<code>(N, Y, X) ndarray</code></dt>
+<dd>A list of images corresponding to the given
+id_list.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_img_list(id_list, data_dir, keep_missing=False):
+    r&#34;&#34;&#34;Downloads images and saves them based on a list of unique identifiers. 
+    If the images are already downloaded, the file is not downloaded. The
+    function then takes the images and puts them into a list. The order is 
+    not guaranteed to be the same as the input list. This assumes that 
+    &#39;data_dir&#39; exists.  If keep_missing is true, insert blank image into
+    the stack.
+    
+    Parameters
+    ----------
+    id_list: list
+        List of unique svrimg identifiers.
+    data_dir: str
+        Base directory in which to save the images. 
+    Returns
+    -------
+    images: (N, Y, X) ndarray
+        A list of images corresponding to the given
+        id_list.
+    &#34;&#34;&#34;
+
+    loc = request_images(id_list, data_dir)
+    images = []
+
+    for unid, file in loc.items():
+        if file != &#34;Missing&#34;:
+            images.append(read_image(file))
+        else:
+            if keep_missing:
+                images.append(np.zeros((136, 136), dtype=np.uint8))
+                print(unid, &#34; is missing an image file. Inserted blank image because keep_missing is True.&#34;)
+            else:
+                print(unid, &#34; is missing an image file. Did not insert blank image because keep_missing is False.&#34;)
+            
+    images = np.array(images)
+    
+    return images</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_images.read_image"><code class="name flex">
+<span>def <span class="ident">read_image</span></span>(<span>filename)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read and return raw image information based on a given filename.
+pilmode is "P", which allows the retrieval of actual data and not
+RGB intensity information.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt>
+<dd>File from which to read image information.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>image</code></strong> :&ensp;<code>(M, N) ndarray</code></dt>
+<dd>An ndarray representation of the image</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_image(filename):
+    r&#34;&#34;&#34;Read and return raw image information based on a given filename.
+    pilmode is &#34;P&#34;, which allows the retrieval of actual data and not
+    RGB intensity information.
+    
+    Parameters
+    ----------
+    filename: str
+        File from which to read image information.
+
+    Returns
+    -------
+    image: (M, N) ndarray
+        An ndarray representation of the image
+    &#34;&#34;&#34;
+
+    return imread(filename, pilmode=&#39;P&#39;)</code></pre>
+</details>
+</dd>
+<dt id="svrimg.utils.get_images.request_images"><code class="name flex">
+<span>def <span class="ident">request_images</span></span>(<span>id_list, data_dir)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads images and saves them based on a list of unique identifiers.
+If the images are already downloaded, this function just returns the file
+location of the image. This assumes that 'data_dir' exists.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>id_list</code></strong> :&ensp;<code>list</code></dt>
+<dd>List of unique svrimg identifiers.</dd>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base url from which to access files.
+Default is "http://svrimg.org/data/raw_img/"</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>loc</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary of unique identifiers and where the
+affiliated file was saved.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def request_images(id_list, data_dir):
+    r&#34;&#34;&#34;Downloads images and saves them based on a list of unique identifiers. 
+    If the images are already downloaded, this function just returns the file 
+    location of the image. This assumes that &#39;data_dir&#39; exists.
+    
+    Parameters
+    ----------
+    id_list: list
+        List of unique svrimg identifiers.
+    data_dir: str
+        Base url from which to access files. 
+        Default is &#34;http://svrimg.org/data/raw_img/&#34;
+    Returns
+    -------
+    loc: dict
+        A dictionary of unique identifiers and where the 
+        affiliated file was saved.
+    &#34;&#34;&#34;
+    
+    file_locs = {}
+    
+    if type(id_list) == list or type(id_list) == np.ndarray:
+
+        for img_name in id_list:
+
+            folder_url = _parse_str(img_name[:12])
+            
+            year = img_name[:4]
+            parent_dir = &#34;{}/{}/&#34;.format(data_dir, year)
+            
+            if not os.path.exists(parent_dir + img_name + &#34;.png&#34;):
+                if not os.path.exists(parent_dir):
+                    os.makedirs(parent_dir)
+                try:
+                    _write_img(parent_dir, folder_url, img_name + &#34;.png&#34;)
+                    file_locs[img_name] = parent_dir + img_name + &#34;.png&#34;
+                except HTTPError as e:
+                    print(e, parent_dir + img_name + &#34;.png&#34;)
+                    file_locs[img_name] = &#34;Missing&#34;
+            else:
+                #print(parent_dir + img_name + &#34;.png&#34;, &#34;Exists!&#34;)
+                file_locs[img_name] = parent_dir + img_name + &#34;.png&#34;
+
+    return file_locs</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="svrimg.utils" href="index.html">svrimg.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="svrimg.utils.get_images.geo_read_image" href="#svrimg.utils.get_images.geo_read_image">geo_read_image</a></code></li>
+<li><code><a title="svrimg.utils.get_images.get_example" href="#svrimg.utils.get_images.get_example">get_example</a></code></li>
+<li><code><a title="svrimg.utils.get_images.get_example_data" href="#svrimg.utils.get_images.get_example_data">get_example_data</a></code></li>
+<li><code><a title="svrimg.utils.get_images.get_img_list" href="#svrimg.utils.get_images.get_img_list">get_img_list</a></code></li>
+<li><code><a title="svrimg.utils.get_images.read_image" href="#svrimg.utils.get_images.read_image">read_image</a></code></li>
+<li><code><a title="svrimg.utils.get_images.request_images" href="#svrimg.utils.get_images.request_images">request_images</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
+</footer>
+</body>
+</html>
