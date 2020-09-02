@@ -3,7 +3,6 @@
 
 [![Build Status](https://travis-ci.com/ahaberlie/SVRIMG.svg?branch=master)](https://travis-ci.com/ahaberlie/SVRIMG)
 
-
 <h3>Dependencies</h3>
 <p>These Python packages are required to run the utility code in this repository.</p>
 <lu>
@@ -29,6 +28,16 @@
 ```
 conda install numpy matplotlib pandas xarray imageio
 ```
+
+<h3>Installing SVRIMG</h3>
+<p>
+1) clone the repository (git or GUI, either is fine)
+2) navigate to the project directory ("SVRIMG")
+2a) activate environments, etc.
+3) type the following `python setup.py install`
+4) you now can import svrimg in Python
+
+</p>
 
 <h3>Overview</h3>
 <p>
