@@ -20,15 +20,10 @@
 </ul>
 </p>
 
-<li>cartopy</li>
-<li>jupyter</li>
-<li>notebook</li>
-</lu>
-
 <p>Copy and paste into anaconda python command prompt to install requirements.</a>
 
 ```
-conda install numpy matplotlib pandas xarray imageio cartopy jupyter notebook
+conda install numpy matplotlib pandas xarray imageio
 ```
 
 <h3>Overview</h3>
