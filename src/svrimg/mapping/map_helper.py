@@ -31,46 +31,13 @@ def radar_norm():
 def radar_colormap():
     r"""Returns an NWS colormap.
     
-      Color      dBZ
-
-    "#04e9e7"    5
-    
-    "#019ff4"    10
-    
-    "#0300f4"    15
-    
-    "#02fd02"    20
-    
-    "#01c501"    25
-    
-    "#008e00"    30
-    
-    "#fdf802"    35
-    
-    "#e5bc00"    40
-    
-    "#fd9500"    45
-    
-    "#fd0000"    50
-    
-    "#d40000"    55
-    
-    "#bc0000"    60
-    
-    "#f800fd"    65
-    
-    "#9854c6"    70
-    
-    "#4B0082"    75
-    
-    "#000000"    80
-    
     Parameters
     ----------
         
     Returns
     -------
-    cmap: ListedColormap. NWS-like radar colormap.
+    cmap: ListedColormap
+        NWS-like radar colormap.
     """ 
  
     nws_reflectivity_colors = [ "#ffffff", # 0
