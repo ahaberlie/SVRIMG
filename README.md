@@ -19,10 +19,10 @@ Note: The SVRIMG interface is still extremely new, and is likely to change. Do n
 <lu>
 <li>jupyter notebook</li>
 <li>scipy==1.5.2</li>
-<li>scikit-learn=0.23.2</li>
-<li>keras=2.3.1</li>
-<li>tensorflow-gpu=1.15.0</li>
-<li>cartopy=0.17.0</li>
+<li>scikit-learn==0.23.2</li>
+<li>keras==2.3.1</li>
+<li>tensorflow-gpu==1.15.0</li>
+<li>cartopy==0.17.0</li>
 </ul>
 </p>
 
