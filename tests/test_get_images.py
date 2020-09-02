@@ -25,21 +25,6 @@ def test_parse_str():
     assert_equal(result, "http://svrimg.org/data/raw_img/1996/01/")
 
 
-def test_write_image():
-
-    test_img = np.load(test_data_dir + "test_imgs.npy")[3]
-    
-    save_dir = test_data_dir + "write_img/"
-    url_dir = "http://svrimg.org/data/raw_img/2011/04/"
-    img_name = "201104041350z000282677.png"
-    
-    _write_img(save_dir, url_dir, img_name)
-    
-    img = read_image(save_dir + img_name)
-    
-    assert_almost_equal(img, test_img)
-
-
 def test_request_images():
     id_list = ['201104041310z000282671',
                '201104041338z000282673',
