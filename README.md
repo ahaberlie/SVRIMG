@@ -26,10 +26,10 @@ Note: The SVRIMG interface is still extremely new, and is likely to change. Do n
 </ul>
 </p>
 
-<p>Copy and paste into anaconda python command prompt to install requirements.</a>
+<p>Copy and paste into anaconda python command prompt with your environment activated and in the SVRIMG project folder to install the basic requirements.</a>
 
 ```
-conda install numpy matplotlib pandas xarray imageio
+pip install -r minimum_requirements.txt
 ```
 
 <h3>Installing SVRIMG</h3>
