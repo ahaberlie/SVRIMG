@@ -6,18 +6,19 @@
 Note: The SVRIMG interface is still extremely new, and is likely to change. Do not consider anything "stable".
 
 <h3>Dependencies</h3>
-<p>These Python packages are required to run the utility code in this repository.</p>
+<p>These Python packages are required to run the base code in this repository.</p>
 <lu>
-<li>numpy</li>
-<li>matplotlib</li>
-<li>pandas</li>
-<li>xarray</li>
-<li>imageio</li>
+<li>numpy==1.19.1</li>
+<li>matplotlib==2.2.3</li>
+<li>pandas==1.1.1</li>
+<li>xarray==0.16.0</li>
+<li>imageio==2.9.0</li>
 </ul>
 </p>
 <p>These Python packages are suggested to run the jupyter notebook examples.</p>
 <lu>
 <li>jupyter notebook</li>
+<li>scipy==1.5.2</li>
 <li>scikit-learn=0.23.2</li>
 <li>keras=2.3.1</li>
 <li>tensorflow-gpu=1.15.0</li>
