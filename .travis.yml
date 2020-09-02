@@ -12,6 +12,10 @@ script:
   - export TEST_DATA_DIR=${TRAVIS_BUILD_DIR}/data/test/;
   - export NUMPY_EXPERIMENTAL_ARRAY_FUNCTION=1;
   - pytest
+
+env:
+  jobs:
+    - TASK="coverage"
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)
