@@ -8,23 +8,188 @@ from urllib.error import HTTPError
 import pandas as pd
 import xarray as xr
 import glob
+from datetime import timedelta, datetime
 
-def get_index_table(in_str, data_dir, url="http://svrimg.org/data/"):
-    r"""Downloads svrimg index table from the given url and returns a pandas
-    DataFrame. If the table is already downloaded, it simply returns a pandas
-    DataFrame.  Two download options are "all" for the entire 1996 - 2017
-    index table, or a datetime-like string, where the index table for the
-    month containing the date is returned.  If "all" or a datetime-like
-    string is not provided, the function will fail. This assumes that 
-    'data_dir' exists.
+
+def _create_unid(x, haz_type=""):
+    r"""Creates a unique id for each svrgis report.
     
     Parameters
     ----------
-    in_str: str
-        Either "all" or a datetime-like string to specify the index 
-        table period. 
+    x: Series
+        A single row from a pandas DataFrame
+    haz_type: str
+        Optional additional identifier to add to unid. Default is "".     
+        
+    Returns
+    -------
+    unid: str
+        A unique id based on the information in a given pandas DataFrame row.
+    """  
+
+    unid = "{}{:02d}{:02d}{:02d}{:02d}z{:09d}_{}"
+    unid = unid.format(x['date_utc'].year, x['date_utc'].month, 
+                       x['date_utc'].day, x['date_utc'].hour,
+                       x['date_utc'].minute, x['om'], haz_type)                                         
+    return unid   
+
+def _create_dtime(x, UTC):
+    r"""Generates datetimes from given DataFrame row columns date
+    and time. If UTC=True, add 6 hours to this time.
+    
+    Parameters
+    ----------
+    x: Series
+        A single row from a pandas DataFrame
+    UTC: str
+        If true, add 6 hours to the dtime.  
+        Note: This only works with CST.     
+        
+    Returns
+    -------
+    unid: str
+        A unique id based on the information in a given pandas DataFrame row.
+    """  
+
+    dstr = "{}-{}".format(x['date'], x['time'])
+    dtime = parse(dstr)
+    
+    if UTC:             
+        dtime += timedelta(hours=6)
+    
+    return dtime     
+
+def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs", 
+                         start_year=1996, end_year=2017, 
+                         UTC=True):
+    r"""Opens a given svrgis table from data_dir + in_name and returns a pandas
+    DataFrame. If the table is already created, nothing will happe. Otherwise,
+    it saves data_dir + out_name. This function assumes that 'data_dir' exists.
+    
+    NOTE: If UTC is true, all report times are incremented by 6 hours. This
+    is because SPC stores the dates as central standard time (CST) for every 
+    day of the year.
+    
+    Parameters
+    ----------
+    in_name: str
+        Name of original svrgis csv file that you downloaded from SPC.
+    out_name: str
+        Name of output csv file.   
+    haz_type: str
+        Optionally add this string to the end of the unid.         
     data_dir: str
-        Base directory in which to save the csv file.
+        Location where the original svrgis csv file is and where the 
+        new file will be saved. Default is "../data/csvs/"
+    start_year: int
+        First year from which to return data. Default is 1996.
+    end_year: int
+        Last year from which to return data. Default is 2017.
+    time_format: str.
+        Format in which to convert the report date. 
+        Default is '%Y-%m-%d-%H:%M:%S'.
+    UTC: bool.
+        Whether or not to convert the svrgis time (CST) to UTC.
+        Default is True.
+        
+    Returns
+    -------
+    td: DataFrame
+        A pandas DataFrame containing the formatted svrgis data.
+    """  
+
+    out_filename = "{}/{}".format(data_dir, out_name)
+    in_filename = "{}/{}".format(data_dir, in_name)
+    
+    if os.path.exists(out_filename):
+        print("File exists!", out_filename)
+        
+    else:
+        td = pd.read_csv(in_filename)
+        td['CST_date'] = td['date']
+        td['CST_time'] = td['time']
+        td['date_utc'] = td.apply(lambda x: _create_dtime(x, UTC), axis=1)
+        td = td.drop(['date', 'time', 'yr', 'mo', 'dy'], axis=1)
+        td['yr'] = td['date_utc'].dt.year
+        td['mo'] = td['date_utc'].dt.month
+        td['dy'] = td['date_utc'].dt.day
+        td['hr'] = td['date_utc'].dt.hour
+        td = td[(td.yr >= start_year) & (td.yr <= end_year)]
+        td['uid'] = td.apply(lambda x: _create_unid(x, haz_type), axis=1)
+        td = td.set_index('uid')
+        td.to_csv(out_filename)
+        return td
+
+def _create_index_table(out_name, haz_type, data_dir="../data/csv", 
+                       url="http://svrimg.org/data/", start_year=1996, 
+                       end_year=2017):
+    r"""Attempts to download and concatenate monthly tables from svrimg for
+    a given hazard type.  If the file doesn't exist, saves result out_name 
+    in data_dir.  Otherwise, just returns DataFrame from existing file.
+    
+    Parameters
+    ----------
+    out_name: str
+        Name of output csv file.     
+    haz_type: str
+        Optionally add this string to the end of the unid.
+    data_dir: str
+        Location where the original svrgis csv file is and where the 
+        new file will be saved. Default is "../data/csvs"
+    url: str
+        Base url directory where the table data is located. 
+        Default is "http://svrimg.org/data/".
+    start_year: int
+        First year from which to return data. Default is 1996.
+    end_year: int
+        Last year from which to return data. Default is 2017.
+        
+    Returns
+    -------
+    td: DataFrame
+        A pandas DataFrame containing the formatted svrimg index data.
+    """   
+    
+    out_filename = "{}/{}".format(data_dir, out_name)
+    
+    if not os.path.exists(out_filename):
+    
+        return pd.read_csv(out_filename, index_col='unid')
+
+    else:
+        csvs = []
+        
+        for year in range(start_year, end_year+1):
+        
+            for month in range(1, 13):
+                csv_name = "report_box_indexer_{:02d}.csv".format(month)
+                file_url = "{}/{}/{}/{}".format(url, haz_type, 
+                                                year, csv_name)
+                tmp_csv = pd.read_csv(file_url, index_col='unid')
+                csvs.append(tmp_csv)
+                
+        csvs = pd.concat(csvs)
+        csvs.to_csv(out_filename)
+        
+        return csvs
+
+def get_table(which, haz_type, data_dir="../data/csv", 
+              url="http://svrimg.org/data/"):
+    r"""Downloads svrimg index or svrgis report table from the given url 
+    and returns a pandas DataFrame. If the table is already downloaded, 
+    it simply returns a pandas DataFrame. This assumes that 'data_dir' 
+    exists.
+    
+    Parameters
+    ----------
+    which: str
+        Either 'svrimg' for image indexes or 'svrgis' for report attributes. 
+    haz_type: str
+        Identify what hazard key to request. Expecting 'tor', 'hail', 
+        or 'wind'.  
+    data_dir: str
+        Base directory in which to save the csv file. Default is 
+        "../data/csv/".
     url: str
         Base url directory where the table data is located. 
         Default is "http://svrimg.org/data/".
@@ -35,67 +200,27 @@ def get_index_table(in_str, data_dir, url="http://svrimg.org/data/"):
         A pandas DataFrame containing svrimg index information.
     """               
 
-    if in_str == 'all':
-        if not os.path.exists("{}/96-17_tor_utc_svrimg_index.csv".format(data_dir)):
+    if which == 'svrimg':
+        csv_name = "96-17_{}_utc_svrimg_index.csv".format(haz_type)
         
-            _url = url + "96-17_tor_utc_svrimg_index.csv"
-            
-            c = pd.read_csv(_url, index_col='unid')
-            c.to_csv("{}/96-17_tor_utc_svrimg_index.csv".format(data_dir))
-            return c
-        else:
-            #print("{}/96-17_tor_utc_svrimg_index.csv".format(data_dir), "is already downloaded")
-            return pd.read_csv("{}/96-17_tor_utc_svrimg_index.csv".format(data_dir), index_col='unid')
+    elif which == 'svrgis':
+        csv_name = "96-17_{}_utc_gridrad.csv".format(haz_type)
+        
     else:
-        try:
-            date = parse(in_str)
+        raise ValueError("Expected 'svrimg' or 'svrgis', not {}.".format(which))
+        
+    file_url = "{}/{}/{}".format(url, haz_type, csv_name)
+    file_name = "{}/{}".format(data_dir, fname)
 
-            fname = "report_box_indexer_{:02d}.csv".format(date.month)
-                                                           
-            if not os.path.exists("{}/{}_{}".format(data_dir, date.year, fname)):
-                _url = "{}/raw_img/{}/{}".format(url, date.year, fname)
-                print(_url)
-                c = pd.read_csv(_url, index_col='unid')
-                c.to_csv("{}/{}_{}".format(data_dir, date.year, fname))
-                return c
-            else:
-                #print("{}/{}_{}".format(data_dir, date.year, fname), "is already downloaded")
-                
-                return pd.read_csv("{}/{}_{}".format(data_dir, date.year, fname), index_col='unid')
-                
-        except Exception as e:
-            print(e, "Expected date string or 'all'")
+    if not os.path.exists(file_name):
+        tmp_csv = pd.read_csv(file_url, index_col='unid')
+        tmp_csv.to_csv(file_name)
 
-def get_svrgis_table(data_dir, url="http://svrimg.org/data/"):        
-    r"""Downloads svrgis index table from the given url and returns a pandas
-    DataFrame. If the table is already downloaded, it simply returns a pandas
-    DataFrame.  The only download option is the entire 1996 - 2017
-    dataset. This assumes that 'data_dir' exists.
-    
-    Parameters
-    ----------
-    data_dir: str
-        Base directory in which to save the csv file.
-    url: str. Base url directory where the table data is located. 
-              Default is "http://svrimg.org/data/".
+        return tmp_csv
         
-    Returns
-    -------
-    table_data: DataFrame
-        A pandas DataFrame A DataFrame containing svrgis severe report
-        information.
-    """  
-  
-    if not os.path.exists("{}/96-17_tor_utc_gridrad.csv".format(data_dir)):
-        
-        _url = url + "96-17_tor_utc_gridrad.csv"
-        
-        c = pd.read_csv(_url, index_col='uid')
-        c.to_csv("{}/96-17_tor_utc_gridrad.csv".format(data_dir))
-        return c
     else:
-        #print("{}/96-17_tor_utc_gridrad.csv".format(data_dir), "is already downloaded")
-        return pd.read_csv("{}/96-17_tor_utc_gridrad.csv".format(data_dir), index_col='uid')            
+
+        return pd.read_csv(file_name, index_col='unid')          
         
 def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True, 
                     default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
@@ -127,7 +252,8 @@ def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True,
         Default name of new csv file containing classifications.
     remove_first_row: bool
         Removes first row from each year of local table data if True, ignores 
-        first row if false. Default is False.    
+        first row if false. Default is False.   
+        
     Returns
     -------
     csv: DataFrame

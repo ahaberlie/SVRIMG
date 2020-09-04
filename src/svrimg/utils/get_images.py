@@ -8,36 +8,8 @@ from urllib.error import HTTPError
 import xarray as xr
 from imageio import imread
 import pickle
-
-def _parse_str(in_str, url="http://svrimg.org/data/raw_img"):
-    r"""Attempts to parse a string assuming it has some form 
-    of datetime format. Returns a formatted base url directory 
-    for monthly files. Function will fail if in_str is not 
-    datetime-like. Formats that work include YYYYMMDDHHmm
-    and YYYYMMDD.
     
-    Parameters
-    ----------
-    in_str: str
-        String with date information.
-    url: dictionary
-        Base url from which to access files. 
-        Default = "http://svrimg.org/data/raw_img/"
-    Returns
-    -------
-    file_url: str
-        Base url for monthly file directory.
-    """
-
-    date = parse(in_str)
-    yr = date.year
-    mo = date.month
-    
-    file_url = "{}/{}/{:02d}/".format(url, yr, mo)
-                                                      
-    return file_url           
-    
-def _write_img(save_dir, url_dir, img_name):
+def _write_img(url_file, out_file):
     r"""Downloads an image from a given url and saves it 
     in a specified directory.
     
@@ -50,13 +22,45 @@ def _write_img(save_dir, url_dir, img_name):
     img_name: str
         Image filename.
     """
-    
-    file_url = url_dir + img_name
-    img = urlopen(file_url)
-    with open(save_dir + img_name, "wb") as file:
+
+    img = urlopen(url_file)
+    with open(out_file, "wb") as file:
         file.write(img.read())
+        
+def _parse_str(in_str, haz_type, url="http://svrimg.org/data/raw_img"):
+    r"""Attempts to parse a string assuming it has some form 
+    of datetime format. Returns a formatted base url directory 
+    for monthly files. Function will fail if in_str is not 
+    datetime-like. Formats that work include YYYYMMDDHHmm
+    and YYYYMMDD.
+    
+    Parameters
+    ----------
+    in_str: str
+        String with date information.
+    haz_type: str
+        Identify what hazard key to request. Expecting 'tor', 'hail', 
+        or 'wind'.       
+    url: dictionary
+        Base url from which to access files. 
+        Default = "http://svrimg.org/data/raw_img/"
+
+    Returns
+    -------
+    file_url: str
+        Base url for monthly file directory.
+    """
+
+    date = parse(in_str)
+    yr = date.year
+    mo = date.month
+    
+    file_url = "{}/{}/{}/{:02d}/".format(url, haz_type, yr, mo)
+                                                      
+    return file_url           
                 
-def request_images(id_list, data_dir):
+def request_images(id_list, haz_type, data_dir="../data", 
+                   url="http://svrimg.org/data/raw_img"):
     r"""Downloads images and saves them based on a list of unique identifiers. 
     If the images are already downloaded, this function just returns the file 
     location of the image. This assumes that 'data_dir' exists.
@@ -65,9 +69,15 @@ def request_images(id_list, data_dir):
     ----------
     id_list: list
         List of unique svrimg identifiers.
+    haz_type: str
+        Identify what hazard key to request. Expecting 'tor', 'hail', 
+        or 'wind'.
     data_dir: str
+        Base directory in which to save the images. Default is "../data".
+    url: str
         Base url from which to access files. 
         Default is "http://svrimg.org/data/raw_img/"
+
     Returns
     -------
     loc: dict
@@ -76,32 +86,35 @@ def request_images(id_list, data_dir):
     """
     
     file_locs = {}
-    
-    if type(id_list) == list or type(id_list) == np.ndarray:
 
-        for img_name in id_list:
+    for img_name in id_list:
+        year = img_name[:4]
+        
+        url_dir = _parse_str(img_name[:12], haz_type)
+        out_dir = "{}/{}/{}".format(data_dir, haz_type, year)
+        
+        url_file = "{}/{}.png".format(url_dir, img_name)
+        out_file = "{}/{}.png".format(out_dir, img_name)
+        
+        if not os.path.exists(out_file):
+        
+            if not os.path.exists(out_dir):
+                os.makedirs(out_dir)
+                    
+            try:
+                _write_img(url_file, out_file)
+                file_locs[img_name] = out_file
 
-            folder_url = _parse_str(img_name[:12])
-            
-            year = img_name[:4]
-            parent_dir = "{}/{}/".format(data_dir, year)
-            
-            if not os.path.exists(parent_dir + img_name + ".png"):
-                if not os.path.exists(parent_dir):
-                    os.makedirs(parent_dir)
-                try:
-                    _write_img(parent_dir, folder_url, img_name + ".png")
-                    file_locs[img_name] = parent_dir + img_name + ".png"
-                except HTTPError as e:
-                    print(e, parent_dir + img_name + ".png")
-                    file_locs[img_name] = "Missing"
-            else:
-                #print(parent_dir + img_name + ".png", "Exists!")
-                file_locs[img_name] = parent_dir + img_name + ".png"
+            except HTTPError as e:
+                print(e, url_file, out_file)
+                file_locs[img_name] = "Missing"
+                    
+        else:
+            file_locs[img_name] = out_file
 
     return file_locs
     
-def get_img_list(id_list, data_dir, keep_missing=False):
+def get_img_list(id_list, haz_type, data_dir="../data", keep_missing=False):
     r"""Downloads images and saves them based on a list of unique identifiers. 
     If the images are already downloaded, the file is not downloaded. The
     function then takes the images and puts them into a list. The order is 
@@ -113,8 +126,12 @@ def get_img_list(id_list, data_dir, keep_missing=False):
     ----------
     id_list: list
         List of unique svrimg identifiers.
+    haz_type: str
+        Identify what hazard key to request. Expecting 'tor', 'hail', 
+        or 'wind'.
     data_dir: str
         Base directory in which to save the images. 
+        
     Returns
     -------
     images: (N, Y, X) ndarray
@@ -122,16 +139,21 @@ def get_img_list(id_list, data_dir, keep_missing=False):
         id_list.
     """
 
-    loc = request_images(id_list, data_dir)
-    images = []
+    loc = request_images(id_list, haz_type, data_dir=data_dir)
 
+    images = []
+    
     for unid, file in loc.items():
+
         if file != "Missing":
             images.append(read_image(file))
+
         else:
+
             if keep_missing:
                 images.append(np.zeros((136, 136), dtype=np.uint8))
                 print(unid, " is missing an image file. Inserted blank image because keep_missing is True.")
+
             else:
                 print(unid, " is missing an image file. Did not insert blank image because keep_missing is False.")
             
@@ -158,6 +180,7 @@ def geo_read_image(index, locator, uid, x_=1399, y_=899):
         Size of x dimension of original grid. Default is 1399.
     y_: int
         Size of y dimension of original grid. Default is 899.
+
     Returns
     -------
     canvas: (y_, x_) ndarray
@@ -194,6 +217,7 @@ def get_example_data(data_type, data_dir="../data/pkls/",
         Size of x dimension of original grid. Default is 1399.
     y_: int
         Size of y dimension of original grid. Default is 899.
+
     Returns
     -------
     x_y_data: ndarray
@@ -203,29 +227,38 @@ def get_example_data(data_type, data_dir="../data/pkls/",
 
     if data_type == 'training':
         loc = "{}/1996_2011_train.pkl".format(data_dir)
+
         if not os.path.exists(loc):
             _url = url + "1996_2011_train.pkl"
             pkl = urlopen(_url)
+
             with open(loc, "wb") as file:
                 file.write(pkl.read())
+
     elif data_type == 'validation':
         loc = "{}/2012_2013_validation.pkl".format(data_dir)
+
         if not os.path.exists(loc):
             _url = url + "2012_2013_validation.pkl"
             pkl = urlopen(_url)
+
             with open(loc, "wb") as file:
                 file.write(pkl.read())
       
     elif data_type == 'testing':
         loc = "{}/2014_2017_test.pkl".format(data_dir)
+
         if not os.path.exists(loc):
             _url = url + "2014_2017_test.pkl"
             pkl = urlopen(_url)
+
             with open(loc, "wb") as file:
                 file.write(pkl.read())
     else:
         print("Expected training, validation, or testing")
+        
         return None
+        
     return pickle.load(open(loc, "rb"))   
 
 

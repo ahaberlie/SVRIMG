@@ -14,15 +14,15 @@ def test_parse_str():
 
     input_str = "199601010101"
     
-    result = _parse_str(input_str)
+    result = _parse_str(input_str, "tor")
     
-    assert_equal(result, "http://svrimg.org/data/raw_img/1996/01/")
+    assert_equal(result, "http://svrimg.org/data/raw_img/tor/1996/01/")
     
     input_str = "19960101"
     
-    result = _parse_str(input_str)
+    result = _parse_str(input_str, "tor")
     
-    assert_equal(result, "http://svrimg.org/data/raw_img/1996/01/")
+    assert_equal(result, "http://svrimg.org/data/raw_img/tor/1996/01/")
 
 
 def test_request_images():
@@ -38,7 +38,7 @@ def test_request_images():
     
     img_list = [img5, img4, img3, img2, img1]
     
-    f_dict = request_images(id_list, data_dir)
+    f_dict = request_images(id_list, haz_type="tor", data_dir=data_dir)
     
     for id, filename in f_dict.items():
     
@@ -58,7 +58,7 @@ def test_get_img_list():
     data_dir = test_data_dir + "/img_list/"
     
     test_img_list = np.load(test_data_dir + "test_imgs.npy")
-    img_list = get_img_list(id_list, data_dir)
+    img_list = get_img_list(id_list, haz_type="tor", data_dir=data_dir)
     assert_almost_equal(img_list, test_img_list)
 
     id_list = ['201104041310z000282671',
@@ -68,11 +68,11 @@ def test_get_img_list():
                '201104041408z000282156']
 
     test_img_list[1] = np.zeros(shape=(136, 136), dtype=np.uint8)
-    img_list = get_img_list(id_list, data_dir, keep_missing=True)
+    img_list = get_img_list(id_list, haz_type="tor", data_dir=data_dir, keep_missing=True)
     assert_almost_equal(img_list, test_img_list)
     
     test_img_list = np.delete(test_img_list, 1, axis=0)
-    img_list = get_img_list(id_list, data_dir)
+    img_list = get_img_list(id_list, haz_type="tor", data_dir=data_dir)
     assert_almost_equal(img_list, test_img_list)
 
 def test_geo_read_image():
@@ -85,7 +85,7 @@ def test_geo_read_image():
     test_index = pd.DataFrame.from_dict(d)
     test_index = test_index.set_index("UNID")
     
-    f_dict = request_images(["201104271836z000303011"], test_data_dir + "georead/")
+    f_dict = request_images(["201104271836z000303011"], "tor", test_data_dir + "georead/")
 
     test_img = np.load(test_data_dir + "geo_img.npy")
     
