@@ -120,8 +120,8 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         td.to_csv(out_filename)
         return td
 
-def _create_index_table(out_name, haz_type, data_dir="../data/csv", 
-                       url="http://svrimg.org/data/", start_year=1996, 
+def _create_index_table(out_name, haz_type, data_dir="../data/csvs", 
+                       url="http://svrimg.org/data/raw_img/", start_year=1996, 
                        end_year=2017):
     r"""Attempts to download and concatenate monthly tables from svrimg for
     a given hazard type.  If the file doesn't exist, saves result out_name 
@@ -152,7 +152,7 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csv",
     
     out_filename = "{}/{}".format(data_dir, out_name)
     
-    if not os.path.exists(out_filename):
+    if os.path.exists(out_filename):
     
         return pd.read_csv(out_filename, index_col='unid')
 
@@ -165,8 +165,11 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csv",
                 csv_name = "report_box_indexer_{:02d}.csv".format(month)
                 file_url = "{}/{}/{}/{}".format(url, haz_type, 
                                                 year, csv_name)
-                tmp_csv = pd.read_csv(file_url, index_col='unid')
-                csvs.append(tmp_csv)
+                try:
+                    tmp_csv = pd.read_csv(file_url, index_col='unid')
+                    csvs.append(tmp_csv)
+                except HTTPError as e:
+                    print(e, file_url)
                 
         csvs = pd.concat(csvs)
         csvs.to_csv(out_filename)
