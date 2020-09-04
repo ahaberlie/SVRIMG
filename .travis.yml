@@ -16,7 +16,7 @@ install:
 script:
   - export TEST_DATA_DIR=${TRAVIS_BUILD_DIR}/data/test/;
   - export NUMPY_EXPERIMENTAL_ARRAY_FUNCTION=1;
-  - pytest
+  - pytest --cov=./src/svrimg
   
 after_success:
   - codecov
