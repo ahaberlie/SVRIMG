@@ -159,6 +159,8 @@ def get_img_list(id_list, haz_type, data_dir=&#34;../data&#34;, keep_missing=Fal
         or &#39;wind&#39;.
     data_dir: str
         Base directory in which to save the images. 
+    keep_missing: bool
+        If true, place empty image in list at index of missing file. 
         
     Returns
     -------
@@ -607,6 +609,8 @@ the stack.</p>
 or 'wind'.</dd>
 <dt><strong><code>data_dir</code></strong> :&ensp;<code>str</code></dt>
 <dd>Base directory in which to save the images.</dd>
+<dt><strong><code>keep_missing</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If true, place empty image in list at index of missing file.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -635,6 +639,8 @@ id_list.</dd>
         or &#39;wind&#39;.
     data_dir: str
         Base directory in which to save the images. 
+    keep_missing: bool
+        If true, place empty image in list at index of missing file. 
         
     Returns
     -------

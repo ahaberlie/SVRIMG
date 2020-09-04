@@ -131,6 +131,8 @@ def get_img_list(id_list, haz_type, data_dir="../data", keep_missing=False):
         or 'wind'.
     data_dir: str
         Base directory in which to save the images. 
+    keep_missing: bool
+        If true, place empty image in list at index of missing file. 
         
     Returns
     -------
