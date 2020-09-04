@@ -4,18 +4,19 @@ python:
   - "3.7"
 # command to install dependencies
 before_install:
-  - python setup.py install
+  - python --version
+  - pip install -U pip
+  - pip install -U pytest
+  - pip install codecov
+  
 install:
   - pip install -r minimum_requirements.txt
+  - python setup.py install
 # command to run tests
 script:
   - export TEST_DATA_DIR=${TRAVIS_BUILD_DIR}/data/test/;
   - export NUMPY_EXPERIMENTAL_ARRAY_FUNCTION=1;
   - pytest
-
-env:
-  jobs:
-    - TASK="coverage"
   
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - codecov
