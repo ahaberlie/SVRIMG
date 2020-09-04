@@ -173,7 +173,7 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csv",
         
         return csvs
 
-def get_table(which, haz_type, data_dir="../data/csv", 
+def get_table(which, haz_type, data_dir="../data/csvs", 
               url="http://svrimg.org/data/"):
     r"""Downloads svrimg index or svrgis report table from the given url 
     and returns a pandas DataFrame. If the table is already downloaded, 
@@ -202,25 +202,27 @@ def get_table(which, haz_type, data_dir="../data/csv",
 
     if which == 'svrimg':
         csv_name = "96-17_{}_utc_svrimg_index.csv".format(haz_type)
+        id_col = 'unid'
         
     elif which == 'svrgis':
         csv_name = "96-17_{}_utc_gridrad.csv".format(haz_type)
+        id_col = 'uid'
         
     else:
         raise ValueError("Expected 'svrimg' or 'svrgis', not {}.".format(which))
         
-    file_url = "{}/{}/{}".format(url, haz_type, csv_name)
-    file_name = "{}/{}".format(data_dir, fname)
+    file_url = "{}/{}".format(url, csv_name)
+    file_name = "{}/{}".format(data_dir, csv_name)
 
     if not os.path.exists(file_name):
-        tmp_csv = pd.read_csv(file_url, index_col='unid')
+        tmp_csv = pd.read_csv(file_url, index_col=id_col)
         tmp_csv.to_csv(file_name)
 
         return tmp_csv
         
     else:
 
-        return pd.read_csv(file_name, index_col='unid')          
+        return pd.read_csv(file_name, index_col=id_col)          
         
 def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True, 
                     default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
@@ -281,7 +283,7 @@ def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True,
             
     return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
 
-def get_geog(data_dir, url="http://svrimg.org/maps/"):
+def get_geog(data_dir="../data/geog/", url="http://svrimg.org/maps/"):
     r"""Downloads svrimg geography netcdf file from the given url and returns
     an xarray dataset. If the netcdf file is already downloaded, it simply 
     returns an xarray dataset.  This assumes that 'data_dir' exists.
