@@ -27,7 +27,7 @@ def _write_img(url_file, out_file):
     with open(out_file, "wb") as file:
         file.write(img.read())
         
-def _parse_str(in_str, haz_type, url="http://svrimg.org/data/raw_img"):
+def _parse_str(in_str, haz_type, url="https://svrimg.org/data/raw_img"):
     r"""Attempts to parse a string assuming it has some form 
     of datetime format. Returns a formatted base url directory 
     for monthly files. Function will fail if in_str is not 
@@ -60,7 +60,7 @@ def _parse_str(in_str, haz_type, url="http://svrimg.org/data/raw_img"):
     return file_url           
                 
 def request_images(id_list, haz_type, data_dir="../data", 
-                   url="http://svrimg.org/data/raw_img"):
+                   url="https://svrimg.org/data/raw_img"):
     r"""Downloads images and saves them based on a list of unique identifiers. 
     If the images are already downloaded, this function just returns the file 
     location of the image. This assumes that 'data_dir' exists.
@@ -199,7 +199,7 @@ def geo_read_image(index, locator, uid, x_=1399, y_=899):
     return canvas
     
 def get_example_data(data_type, data_dir="../data/pkls/", 
-                     url="http://svrimg.org/data/classifications/"):
+                     url="https://svrimg.org/data/classifications/"):
     r"""Returns training, validation, or testing data, depending on the
     value of 'data_type'.  This function attempts to download the data
     if the file does not exist in 'data_dir'.  Returns x and y data
@@ -282,7 +282,7 @@ def read_image(filename):
 
     return imread(filename, pilmode='P')
     
-def get_example(data_dir="../data/example/", url="http://svrimg.org/data/"):
+def get_example(data_dir="../data/example/", url="https://svrimg.org/data/"):
     r"""Downloads an interpolated GridRad (gridrad.org) file from a url and
     returns an xarray dataset representation from April 27th at 1900 UTC.  
     If the file is already downloaded, it simply returns an xarray dataset 

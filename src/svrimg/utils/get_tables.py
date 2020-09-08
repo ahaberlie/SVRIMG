@@ -121,7 +121,7 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         return td
 
 def _create_index_table(out_name, haz_type, data_dir="../data/csvs", 
-                       url="http://svrimg.org/data/raw_img/", start_year=1996, 
+                       url="https://svrimg.org/data/raw_img/", start_year=1996, 
                        end_year=2017):
     r"""Attempts to download and concatenate monthly tables from svrimg for
     a given hazard type.  If the file doesn't exist, saves result out_name 
@@ -177,7 +177,7 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csvs",
         return csvs
 
 def get_table(which, haz_type, data_dir="../data/csvs", 
-              url="http://svrimg.org/data/"):
+              url="https://svrimg.org/data/"):
     r"""Downloads svrimg index or svrgis report table from the given url 
     and returns a pandas DataFrame. If the table is already downloaded, 
     it simply returns a pandas DataFrame. This assumes that 'data_dir' 
@@ -227,7 +227,7 @@ def get_table(which, haz_type, data_dir="../data/csvs",
 
         return pd.read_csv(file_name, index_col=id_col)          
         
-def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True, 
+def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True, 
                     default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
                     remove_first_row=False):
     r"""Either downloads example predictions if 'example' is true, or combines your prediction
@@ -286,7 +286,7 @@ def get_pred_tables(data_dir, url="http://svrimg.org/data/", example=True,
             
     return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
 
-def get_geog(data_dir="../data/geog/", url="http://svrimg.org/maps/"):
+def get_geog(data_dir="../data/geog/", url="https://svrimg.org/maps/"):
     r"""Downloads svrimg geography netcdf file from the given url and returns
     an xarray dataset. If the netcdf file is already downloaded, it simply 
     returns an xarray dataset.  This assumes that 'data_dir' exists.
