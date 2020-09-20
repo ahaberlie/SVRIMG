@@ -34,6 +34,17 @@ body {
   background-color: #4CAF50;
   color: white;
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
 </style>
 <body>
 <section class="w3-container w3-content w3-center">
@@ -48,20 +59,167 @@ body {
   <a href="raw_data.html">Data</a>
   <a href="machine_learning.html">Machine Learning</a>
   <a href="https://github.com/ahaberlie/SVRIMG">Notebooks (GitHub)</a>
+  <a href="mean_storms.html">Mean Storms</a>
 </div>  
 
-<div>
+<p>
 <h3 class="w3-justify">Data Methodology</h3>
 <p class="w3-justify">
 Radar images are centered on <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> and extracted from the closest 
 hourly data in <a href=http://gridrad.org/>GridRad</a> which can be downloaded from the <a href=https://rda.ucar.edu/datasets/ds841.0/>Research Data Archive</a>.  
 The original ~2x2km 3D data are converted to 2D by calculating the column maximum reflectivity.  These values are then converted to 8-bit integers and interpolated 
 to a 3.75 km <a href="/maps/svrimg_geog.nc">Lambert conformal conic grid</a> using nearest neighbor. The 136 x 136 dimensions result in a region approximately 512 x 512 km.
+</p>
+
+<h3 class="w3-justify">Access the Data</h3>
+<p class="w3-justify">
+136 x 136 pixel (~512 x 512 km) images with units of dBZ.  The center of the radar image is the location of the report. You can download the raw data,
+view individual maps centered on reports, or view all reports on an interactive map for each year.</p>
+<table>
+    <tr>
+        <th>Year</th>
+        <th>Images and CSVs</th>
+        <th>Browse Single Report Maps</th>
+        <th>Browse Annual Report Maps</th>
+    </tr>
+    <tr>
+        <td>1996</td>
+        <td><a href="data/tars/tor/1996_svrimg_raw.tar.gz">1996_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/1996/index.html">1996 Single Report Maps</a></td>
+        <td><a href="maps/1996_map.html">1996 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>1997</td>
+        <td><a href="data/tars/tor/1997_svrimg_raw.tar.gz">1997_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/1997/index.html">1997 Single Report Maps</a></td>
+        <td><a href="maps/1997_map.html">1997 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>1998</td>
+        <td><a href="data/tars/tor/1998_svrimg_raw.tar.gz">1998_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/1998/index.html">1998 Single Report Maps</a></td>
+        <td><a href="maps/1998_map.html">1998 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>1999</td>
+        <td><a href="data/tars/tor/1999_svrimg_raw.tar.gz">1999_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/1999/index.html">1999 Single Report Maps</a></td>
+        <td><a href="maps/1999_map.html">1999 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2000</td>
+        <td><a href="data/tars/tor/2000_svrimg_raw.tar.gz">2000_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2000/index.html">2000 Single Report Maps</a></td>
+        <td><a href="maps/2000_map.html">2000 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2001</td>
+        <td><a href="data/tars/tor/2001_svrimg_raw.tar.gz">2001_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2001/index.html">2001 Single Report Maps</a></td>
+        <td><a href="maps/2001_map.html">2001 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2002</td>
+        <td><a href="data/tars/tor/2002_svrimg_raw.tar.gz">2002_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2002/index.html">2002 Single Report Maps</a></td>
+        <td><a href="maps/2002_map.html">2002 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2003</td>
+        <td><a href="data/tars/tor/2003_svrimg_raw.tar.gz">2003_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2003/index.html">2003 Single Report Maps</a></td>
+        <td><a href="maps/2003_map.html">2003 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2004</td>
+        <td><a href="data/tars/tor/2004_svrimg_raw.tar.gz">2004_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2004/index.html">2004 Single Report Maps</a></td>
+        <td><a href="maps/2004_map.html">2004 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2005</td>
+        <td><a href="data/tars/tor/2005_svrimg_raw.tar.gz">2005_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2005/index.html">2005 Single Report Maps</a></td>
+        <td><a href="maps/2005_map.html">2005 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2006</td>
+        <td><a href="data/tars/tor/2006_svrimg_raw.tar.gz">2006_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2006/index.html">2006 Single Report Maps</a></td>
+        <td><a href="maps/2006_map.html">2006 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2007</td>
+        <td><a href="data/tars/tor/2007_svrimg_raw.tar.gz">2007_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2007/index.html">2007 Single Report Maps</a></td>
+        <td><a href="maps/2007_map.html">2007 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2008</td>
+        <td><a href="data/tars/tor/2008_svrimg_raw.tar.gz">2008_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2008/index.html">2008 Single Report Maps</a></td>
+        <td><a href="maps/2008_map.html">2008 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2009</td>
+        <td><a href="data/tars/tor/2009_svrimg_raw.tar.gz">2009_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2009/index.html">2009 Single Report Maps</a></td>
+        <td><a href="maps/2009_map.html">2009 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2010</td>
+        <td><a href="data/tars/tor/2010_svrimg_raw.tar.gz">2010_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2010/index.html">2010 Single Report Maps</a></td>
+        <td><a href="maps/2010_map.html">2010 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2011</td>
+        <td><a href="data/tars/tor/2011_svrimg_raw.tar.gz">2011_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2011/index.html">2011 Single Report Maps</a></td>
+        <td><a href="maps/2011_map.html">2011 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2012</td>
+        <td><a href="data/tars/tor/2012_svrimg_raw.tar.gz">2012_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2012/index.html">2012 Single Report Maps</a></td>
+        <td><a href="maps/2012_map.html">2012 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2013</td>
+        <td><a href="data/tars/tor/2013_svrimg_raw.tar.gz">2013_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2013/index.html">2013 Single Report Maps</a></td>
+        <td><a href="maps/2013_map.html">2013 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2014</td>
+        <td><a href="data/tars/tor/2014_svrimg_raw.tar.gz">2014_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2014/index.html">2014 Single Report Maps</a></td>
+        <td><a href="maps/2014_map.html">2014 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2015</td>
+        <td><a href="data/tars/tor/2015_svrimg_raw.tar.gz">2015_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2015/index.html">2015 Single Report Maps</a></td>
+        <td><a href="maps/2015_map.html">2015 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2016</td>
+        <td><a href="data/tars/tor/2016_svrimg_raw.tar.gz">2016_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2016/index.html">2016 Single Report Maps</a></td>
+        <td><a href="maps/2016_map.html">2016 Annual Report Maps</a></td>
+    </tr>
+    <tr>
+        <td>2017</td>
+        <td><a href="data/tars/tor/2017_svrimg_raw.tar.gz">2017_svrimg_raw.tar.gz</a></td>
+        <td><a href="data/2017/index.html">2017 Single Report Maps</a></td>
+        <td><a href="maps/2017_map.html">2017 Annual Report Maps</a></td>
+    </tr>
+</table>
 
 <h3 class="w3-justify">Metadata</h3>
 <p class="w3-justify">
 Geogrid parameters:
-<lu>
+<ul>
 <li class="w3-justify"> WEST-EAST_PATCH_END_UNSTAG: 1399</li>
 <li class="w3-justify"> SOUTH-NORTH_PATCH_END_UNSTAG: 899</li>
 <li class="w3-justify"> GRIDTYPE: C</li>
@@ -82,14 +240,14 @@ Geogrid parameters:
   -61.313354  -73.17239  -121.80653  -133.67303   -61.326965  -73.19348
  -121.82312  -133.69632   -61.30368   -73.17688 ]</li>
 <li class="w3-justify"> MAP_PROJ: 1</li>
-</lu>
+</ul>
 
 </p>
 
 
 <p class="w3-justify">
 Description of the columns in the CSV are as follows:
-<lu>
+<ul class="w3-justify">
 <li class="w3-justify"> area - Area covered by 20+ dBZ pixels.</li>
 <li class="w3-justify"> convection_area - Area covered by 40+ dBZ pixels. </li>
 <li class="w3-justify"> filename - original image location. </li>
@@ -106,8 +264,9 @@ Description of the columns in the CSV are as follows:
 <li class="w3-justify"> xmin - minimum x coordinate in 3.75 km LCC grid.</li>
 <li class="w3-justify"> ymax - maximum y coordinate in 3.75 km LCC grid.</li>
 <li class="w3-justify"> ymin - minimum y coordinate in 3.75 km LCC grid.</li>
-</lu>
+</ul>
 </p>
+
 <p class="w3-justify">
 The unid column is based on the report time in UTC and "om" identifier from the "1950-2018_actual_tornadoes.csv" file on 
 the <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> page. You should be able to easily join
@@ -119,20 +278,35 @@ The data are provided at no cost, as-is, with no warranty of any kind. No modifi
 is done before these data are hosted on the website. The process is completely repeatable from start to finish, assuming you have patience or access to a 
 supercomputer cluster. Please examine the <a href=http://gridrad.org/>GridRad</a> and the <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> pages
 to read about the caveats and issues with those data before using these data.
-<p>
+</p>
+
 <p class="w3-justify">
 <h4 class="w3-justify">Known issues include:</h4> 
-<lu>
-<li class="w3-justify"> Severe reports closer to 30 minutes after the hour will have images
-with displaced reflectivity and the level of displacement is dependent on storm motion.
-<li class="w3-justify"> No attempt is made to remove reports with incorrect positions or those that have no radar data.
-A csv is provided that includes basic radar reflectivity statistics which make it possible to filter these events.
-<li class="w3-justify"> The 3.75 km <a href="/maps/svrimg_geog.nc">LCC Grid</a> has larger grid spacing than the original data.
-This will result in some detail being lost.  This was a decision made to reduce the size of the dataset on disk and on GPU.
-<li class="w3-justify"> The raw data are originally "upside down" because of how the grid was defined.  The image browser on this
-website provides flipped images.  However, the tarball data will have the original orientation that matches up with the LCC grid.
-Please take the time to examine what you are throwing into your ConvNet!
-
+<table>
+    <tr>
+        <td>Severe reports closer to 30 minutes after the hour will have images with displaced reflectivity
+            and the level of displacement is dependent on storm motion.
+        </td>
+    </tr>
+    <tr class=w3-justify">
+        <td>No attempt is made to remove reports with incorrect positions or those that have no radar data.
+            A csv is provided that includes basic radar reflectivity statistics which make it possible to
+            filter these events.
+        </td>
+    </tr>
+    <tr class=w3-justify">
+        <td>The 3.75 km <a href="/maps/svrimg_geog.nc">LCC Grid</a> has larger grid spacing than the original data.
+        This will result in some detail being lost.  This was a decision made to reduce the size of the dataset on
+        disk and on GPU.
+        </td>
+    </tr>
+    <tr class=w3-justify">
+        <td>The raw data are originally "upside down" because of how the grid was defined.  The image browser on
+            this website provides flipped images.  However, the tarball data will have the original orientation that
+            matches up with the LCC grid. Please take the time to examine what you are throwing into your ConvNet!
+        </td>
+    </tr>
+</table>
 </p> 
 
 <h3 class="w3-justify">Data Citations</h3>
@@ -147,252 +321,7 @@ climatology community. That being said, we would like to get some credit if you 
 <p class="w3-justify">Bowman, K. P., and C. R. Homeyer. 2017. GridRad - Three-Dimensional Gridded NEXRAD WSR-88D Radar Data. 
    Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.</p> 
 
-<h3 class="w3-justify">Download the Data</h3>
-<p class="w3-justify">
-136 x 136 pixel images with units of dBZ.  Center of the image is the location of the report.</p>
-<table class="w3-justify">
-<tr>
-<th>
-1996
-</th>
-<th>
-<a href="data/tars/tor/1996_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/1996/index.html">Browse Thumbnails</a>
-</th>
-</tr>
 
-<tr>
-<th>
-1997
-</th>
-<th>
-<a href="data/tars/tor/1997_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/1997/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-
-<tr>
-<th>
-1998
-</th>
-<th>
-<a href="data/tars/tor/1998_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/1998/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-
-<tr>
-<th>
-1999
-</th>
-<th>
-<a href="data/tars/tor/1999_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/1999/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-
-<tr>
-<th>
-2000
-</th>
-<th>
-<a href="data/tars/tor/2000_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2000/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-
-<tr>
-<th>
-2001
-</th>
-<th>
-<a href="data/tars/tor/2001_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2001/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-
-<tr>
-<th>
-2002
-</th>
-<th>
-<a href="data/tars/tor/2002_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2002/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2003
-</th>
-<th>
-<a href="data/tars/tor/2003_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2003/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2004
-</th>
-<th>
-<a href="data/tars/tor/2004_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2004/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2005
-</th>
-<th>
-<a href="data/tars/tor/2005_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2005/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2006
-</th>
-<th>
-<a href="data/tars/tor/2006_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2006/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2007
-</th>
-<th>
-<a href="data/tars/tor/2007_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2007/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2008
-</th>
-<th>
-<a href="data/tars/tor/2008_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2008/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2009
-</th>
-<th>
-<a href="data/tars/tor/2009_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2009/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<tr>
-<th>
-2010
-</th>
-<th>
-<a href="data/tars/tor/2010_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2010/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2011
-</th>
-<th>
-<a href="data/tars/tor/2011_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2011/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2012
-</th>
-<th>
-<a href="data/tars/tor/2012_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2012/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2013
-</th>
-<th>
-<a href="data/tars/tor/2013_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2013/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2014
-</th>
-<th>
-<a href="data/tars/tor/2014_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2014/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2015
-</th>
-<th>
-<a href="data/tars/tor/2015_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2015/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2016
-</th>
-<th>
-<a href="data/tars/tor/2016_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2016/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-<th>
-2017
-</th>
-<th>
-<a href="data/tars/tor/2017_svrimg_raw.tar.gz">Images and CSVs</a>
-</th>
-<th>
-<a href="data/2017/index.html">Browse Thumbnails</a>
-</th>
-</tr>
-</table>
 </div>
 </section>
 </body>
