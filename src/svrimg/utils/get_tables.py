@@ -1,14 +1,11 @@
 from urllib.request import urlopen
 from dateutil.parser import parse
-import datetime
 import os
-import re
-import numpy as np 
 from urllib.error import HTTPError
 import pandas as pd
 import xarray as xr
 import glob
-from datetime import timedelta, datetime
+from datetime import timedelta
 
 
 def _create_unid(x, haz_type=""):
@@ -33,7 +30,8 @@ def _create_unid(x, haz_type=""):
                        x['date_utc'].minute, x['om'], haz_type)                                         
     return unid   
 
-def _create_dtime(x, UTC):
+
+def _create_dtime(x, utc):
     r"""Generates datetimes from given DataFrame row columns date
     and time. If UTC=True, add 6 hours to this time.
     
@@ -41,7 +39,7 @@ def _create_dtime(x, UTC):
     ----------
     x: Series
         A single row from a pandas DataFrame
-    UTC: str
+    utc: str
         If true, add 6 hours to the dtime.  
         Note: This only works with CST.     
         
@@ -54,14 +52,15 @@ def _create_dtime(x, UTC):
     dstr = "{}-{}".format(x['date'], x['time'])
     dtime = parse(dstr)
     
-    if UTC:             
+    if utc:
         dtime += timedelta(hours=6)
     
     return dtime     
 
+
 def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs", 
                          start_year=1996, end_year=2017, 
-                         UTC=True):
+                         utc=True):
     r"""Opens a given svrgis table from data_dir + in_name and returns a pandas
     DataFrame. If the table is already created, nothing will happe. Otherwise,
     it saves data_dir + out_name. This function assumes that 'data_dir' exists.
@@ -85,10 +84,7 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         First year from which to return data. Default is 1996.
     end_year: int
         Last year from which to return data. Default is 2017.
-    time_format: str.
-        Format in which to convert the report date. 
-        Default is '%Y-%m-%d-%H:%M:%S'.
-    UTC: bool.
+    utc: bool.
         Whether or not to convert the svrgis time (CST) to UTC.
         Default is True.
         
@@ -108,7 +104,7 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         td = pd.read_csv(in_filename)
         td['CST_date'] = td['date']
         td['CST_time'] = td['time']
-        td['date_utc'] = td.apply(lambda x: _create_dtime(x, UTC), axis=1)
+        td['date_utc'] = td.apply(lambda x: _create_dtime(x, utc), axis=1)
         td = td.drop(['date', 'time', 'yr', 'mo', 'dy'], axis=1)
         td['yr'] = td['date_utc'].dt.year
         td['mo'] = td['date_utc'].dt.month
@@ -120,9 +116,10 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         td.to_csv(out_filename)
         return td
 
+
 def _create_index_table(out_name, haz_type, data_dir="../data/csvs", 
-                       url="https://svrimg.org/data/raw_img/", start_year=1996, 
-                       end_year=2017):
+                        url="https://svrimg.org/data/raw_img/", start_year=1996,
+                        end_year=2017):
     r"""Attempts to download and concatenate monthly tables from svrimg for
     a given hazard type.  If the file doesn't exist, saves result out_name 
     in data_dir.  Otherwise, just returns DataFrame from existing file.
@@ -176,6 +173,7 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csvs",
         
         return csvs
 
+
 def get_table(which, haz_type, data_dir="../data/csvs", 
               url="https://svrimg.org/data/"):
     r"""Downloads svrimg index or svrgis report table from the given url 
@@ -226,7 +224,8 @@ def get_table(which, haz_type, data_dir="../data/csvs",
     else:
 
         return pd.read_csv(file_name, index_col=id_col)          
-        
+
+
 def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True, 
                     default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
                     remove_first_row=False):
@@ -272,12 +271,15 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
             c.to_csv("{}/{}.csv".format(data_dir, csv_name))
     else:
         csvs = []
-        for fname in glob.glob(data_dir + "*_Table_*.csv"):
+        for fname in glob.glob(data_dir + default_name):
         
             print("Reading", fname)
             
             a = pd.read_csv(fname)
-            a = a.drop(0)
+
+            if remove_first_row:
+                a = a.drop(0)
+
             a = a.drop_duplicates(subset=["UNID"], keep='last')
             a = a.set_index("UNID")
             csvs.append(a)
@@ -285,6 +287,7 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
         csvs.to_csv("{}/{}.csv".format(data_dir, csv_name))
             
     return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
+
 
 def get_geog(data_dir="../data/geog/", url="https://svrimg.org/maps/"):
     r"""Downloads svrimg geography netcdf file from the given url and returns
@@ -316,6 +319,4 @@ def get_geog(data_dir="../data/geog/", url="https://svrimg.org/maps/"):
         
         return xr.open_dataset("{}/svrimg_geog.nc".format(data_dir))
     else:
-        #print("{}/svrimg_geog.nc".format(data_dir), "is already downloaded")
         return xr.open_dataset("{}/svrimg_geog.nc".format(data_dir))
-        

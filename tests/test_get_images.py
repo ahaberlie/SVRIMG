@@ -1,14 +1,13 @@
-import logging
-from imageio import imread
 import numpy as np
 import os
-from numpy.testing import assert_equal, assert_almost_equal, assert_array_almost_equal, assert_array_equal
+from numpy.testing import assert_equal, assert_almost_equal
 
-from svrimg.utils.get_images import (_parse_str, _write_img, request_images, 
-                                     get_img_list, geo_read_image, get_example_data, 
-                                     read_image, get_example)
+from svrimg.utils.get_images import (_parse_str, request_images,
+                                     get_img_list, geo_read_image,
+                                     read_image)
                                      
 test_data_dir = os.environ.get('TEST_DATA_DIR')                                  
+
 
 def test_parse_str():
 
@@ -40,7 +39,7 @@ def test_request_images():
     
     f_dict = request_images(id_list, haz_type="tor", data_dir=data_dir)
     
-    for id, filename in f_dict.items():
+    for _, filename in f_dict.items():
     
         img_tmp = read_image(filename)
         
@@ -75,12 +74,13 @@ def test_get_img_list():
     img_list = get_img_list(id_list, haz_type="tor", data_dir=data_dir)
     assert_almost_equal(img_list, test_img_list)
 
+
 def test_geo_read_image():
 
     import pandas as pd
     
-    d = {'UNID':["201104271836z000303011"], 'xmax':[961], 
-         'xmin':[826], 'ymax':[397], 'ymin':[262]}
+    d = {'UNID': ["201104271836z000303011"], 'xmax': [961],
+         'xmin': [826], 'ymax': [397], 'ymin': [262]}
 
     test_index = pd.DataFrame.from_dict(d)
     test_index = test_index.set_index("UNID")

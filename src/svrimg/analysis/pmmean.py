@@ -23,6 +23,7 @@
 import numpy
 from scipy.interpolate import interp1d
 
+
 def _run_pmm_one_variable(
         input_matrix, max_percentile_level=100):
     """Applies PMM to one variable.

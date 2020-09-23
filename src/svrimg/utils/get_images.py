@@ -1,32 +1,30 @@
 from urllib.request import urlopen
 from dateutil.parser import parse
-import datetime
 import os
-import re
 import numpy as np 
 from urllib.error import HTTPError
 import xarray as xr
 from imageio import imread
 import pickle
-    
+
+
 def _write_img(url_file, out_file):
     r"""Downloads an image from a given url and saves it 
     in a specified directory.
     
     Parameters
     ----------
-    save_dir: str
-        Directory in which to save the image.
-    url_dir: str
+    url_file: str
         Base url from which to access files.
-    img_name: str
+    out_file: str
         Image filename.
     """
 
     img = urlopen(url_file)
     with open(out_file, "wb") as file:
         file.write(img.read())
-        
+
+
 def _parse_str(in_str, haz_type, url="https://svrimg.org/data/raw_img"):
     r"""Attempts to parse a string assuming it has some form 
     of datetime format. Returns a formatted base url directory 
@@ -58,9 +56,9 @@ def _parse_str(in_str, haz_type, url="https://svrimg.org/data/raw_img"):
     file_url = "{}/{}/{}/{:02d}/".format(url, haz_type, yr, mo)
                                                       
     return file_url           
-                
-def request_images(id_list, haz_type, data_dir="../data", 
-                   url="https://svrimg.org/data/raw_img"):
+
+
+def request_images(id_list, haz_type, data_dir="../data"):
     r"""Downloads images and saves them based on a list of unique identifiers. 
     If the images are already downloaded, this function just returns the file 
     location of the image. This assumes that 'data_dir' exists.
@@ -74,9 +72,6 @@ def request_images(id_list, haz_type, data_dir="../data",
         or 'wind'.
     data_dir: str
         Base directory in which to save the images. Default is "../data".
-    url: str
-        Base url from which to access files. 
-        Default is "http://svrimg.org/data/raw_img/"
 
     Returns
     -------
@@ -113,7 +108,8 @@ def request_images(id_list, haz_type, data_dir="../data",
             file_locs[img_name] = out_file
 
     return file_locs
-    
+
+
 def get_img_list(id_list, haz_type, data_dir="../data", keep_missing=False):
     r"""Downloads images and saves them based on a list of unique identifiers. 
     If the images are already downloaded, the file is not downloaded. The
@@ -162,7 +158,8 @@ def get_img_list(id_list, haz_type, data_dir="../data", keep_missing=False):
     images = np.array(images)
     
     return images
-    
+
+
 def geo_read_image(index, locator, uid, x_=1399, y_=899):
     r"""Read an image based on a unique identifier, and place the image
     within the original grid.  Requires an svrimg index table that 
@@ -197,7 +194,8 @@ def geo_read_image(index, locator, uid, x_=1399, y_=899):
     canvas[row.ymin:row.ymax+1, row.xmin:row.xmax+1] = im
     
     return canvas
-    
+
+
 def get_example_data(data_type, data_dir="../data/pkls/", 
                      url="https://svrimg.org/data/classifications/"):
     r"""Returns training, validation, or testing data, depending on the
@@ -215,10 +213,6 @@ def get_example_data(data_type, data_dir="../data/pkls/",
     url: str
         Base url directory where the example data are located. Default
         is "http://svrimg.org/data/classifications/".
-    x_: int
-        Size of x dimension of original grid. Default is 1399.
-    y_: int
-        Size of y dimension of original grid. Default is 899.
 
     Returns
     -------
@@ -281,7 +275,8 @@ def read_image(filename):
     """
 
     return imread(filename, pilmode='P')
-    
+
+
 def get_example(data_dir="../data/example/", url="https://svrimg.org/data/"):
     r"""Downloads an interpolated GridRad (gridrad.org) file from a url and
     returns an xarray dataset representation from April 27th at 1900 UTC.  
@@ -315,5 +310,4 @@ def get_example(data_dir="../data/example/", url="https://svrimg.org/data/"):
         
         return xr.open_dataset("{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc".format(data_dir))
     else:
-        #print("{}nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc".format(data_dir), "is already downloaded")
         return xr.open_dataset("{}/nexrad_REFC_COL_MAX_INTERP_v3_1_20110427T190000Z.nc".format(data_dir))
