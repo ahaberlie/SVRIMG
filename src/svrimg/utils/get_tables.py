@@ -8,15 +8,23 @@ import glob
 from datetime import timedelta
 
 
-def _create_unid(x, haz_type=""):
+def _create_unid(x, haz_type):
     r"""Creates a unique id for each svrgis report.
+
+    The unid format is as follows:
+
+    YYYYMMDDHHmmz000000000_HAZ
+
+    Where the date information is from the UTC time of the report, the
+    numbers are a zero-padded 9 digit number corresponding to the 'om'
+    field, and HAZ is the given hazard type ('tor', 'hail', 'wind').
     
     Parameters
     ----------
     x: Series
         A single row from a pandas DataFrame
     haz_type: str
-        Optional additional identifier to add to unid. Default is "".     
+        Hazard identifier to add to unid.
         
     Returns
     -------
@@ -31,7 +39,7 @@ def _create_unid(x, haz_type=""):
     return unid   
 
 
-def _create_dtime(x, utc):
+def _create_dtime(x):
     r"""Generates datetimes from given DataFrame row columns date
     and time. If UTC=True, add 6 hours to this time.
     
@@ -39,9 +47,6 @@ def _create_dtime(x, utc):
     ----------
     x: Series
         A single row from a pandas DataFrame
-    utc: str
-        If true, add 6 hours to the dtime.  
-        Note: This only works with CST.     
         
     Returns
     -------
@@ -51,16 +56,48 @@ def _create_dtime(x, utc):
 
     dstr = "{}-{}".format(x['date'], x['time'])
     dtime = parse(dstr)
+    dtime += timedelta(hours=6)
     
-    if utc:
-        dtime += timedelta(hours=6)
-    
-    return dtime     
+    return dtime
+
+
+def _preprocess_svrgis_table(csv_in):
+    r"""Read in a csv in "svrgis" format and modify it to be compatible with
+    the expected SVRIMG format. The original CST date and time is preserved in the
+    'CST_date' and 'CST_time' columns.
+
+    The SVRIMG format expects UTC time and the following updated columns:
+
+    uid, date_utc, yr, mo, dy, hr
+
+    See also: _create_dtime, _create_unid
+
+    Parameters
+    ----------
+    csv_in: pandas DataFrame
+        DataFrame of svrgis csv that will be modified into the SVRIMG
+        expected format.
+
+    Returns
+    -------
+    csv_in: DataFrame
+        A pandas DataFrame containing the formatted svrgis data.
+    """
+
+    csv_in['CST_date'] = csv_in['date']
+    csv_in['CST_time'] = csv_in['time']
+    csv_in['date_utc'] = csv_in.apply(lambda x: _create_dtime(x), axis=1)
+    csv_in = csv_in.drop(['date', 'time', 'yr', 'mo', 'dy'], axis=1)
+    csv_in['yr'] = csv_in['date_utc'].dt.year
+    csv_in['mo'] = csv_in['date_utc'].dt.month
+    csv_in['dy'] = csv_in['date_utc'].dt.day
+    csv_in['hr'] = csv_in['date_utc'].dt.hour
+
+    return csv_in
 
 
 def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs", 
-                         start_year=1996, end_year=2017, 
-                         utc=True):
+                         start_year=1996, end_year=2017):
     r"""Opens a given svrgis table from data_dir + in_name and returns a pandas
     DataFrame. If the table is already created, nothing will happe. Otherwise,
     it saves data_dir + out_name. This function assumes that 'data_dir' exists.
@@ -84,9 +121,6 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         First year from which to return data. Default is 1996.
     end_year: int
         Last year from which to return data. Default is 2017.
-    utc: bool.
-        Whether or not to convert the svrgis time (CST) to UTC.
-        Default is True.
         
     Returns
     -------
@@ -102,14 +136,7 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
         
     else:
         td = pd.read_csv(in_filename)
-        td['CST_date'] = td['date']
-        td['CST_time'] = td['time']
-        td['date_utc'] = td.apply(lambda x: _create_dtime(x, utc), axis=1)
-        td = td.drop(['date', 'time', 'yr', 'mo', 'dy'], axis=1)
-        td['yr'] = td['date_utc'].dt.year
-        td['mo'] = td['date_utc'].dt.month
-        td['dy'] = td['date_utc'].dt.day
-        td['hr'] = td['date_utc'].dt.hour
+        td = _preprocess_svrgis_table(td)
         td = td[(td.yr >= start_year) & (td.yr <= end_year)]
         td['uid'] = td.apply(lambda x: _create_unid(x, haz_type), axis=1)
         td = td.set_index('uid')

@@ -40,7 +40,7 @@ pip install -r minimum_requirements.txt
 
 2) activate environments and navigate to the project directory ("SVRIMG")
 
-3) type the following ```python setup.py install```
+3) type the following ```pip install .```
 
 4) you now can import ```svrimg``` in Python
 

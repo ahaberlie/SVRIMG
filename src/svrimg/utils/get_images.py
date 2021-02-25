@@ -216,9 +216,10 @@ def get_example_data(data_type, data_dir="../data/pkls/",
 
     Returns
     -------
-    x_y_data: ndarray
+    x_y_z_data: ndarray
         A ndarray where the first dimension is a list of images, 
-        and the second dimension is a list of classifications.
+        the second dimension is a list of classifications, and the third
+        is a list of unids.
     """
 
     if data_type == 'training':
