@@ -87,7 +87,7 @@ def _preprocess_svrgis_table(csv_in):
     csv_in['CST_date'] = csv_in['date']
     csv_in['CST_time'] = csv_in['time']
     csv_in['date_utc'] = csv_in.apply(lambda x: _create_dtime(x), axis=1)
-    csv_in = csv_in.drop(['date', 'time', 'yr', 'mo', 'dy'], axis=1)
+
     csv_in['yr'] = csv_in['date_utc'].dt.year
     csv_in['mo'] = csv_in['date_utc'].dt.month
     csv_in['dy'] = csv_in['date_utc'].dt.day
