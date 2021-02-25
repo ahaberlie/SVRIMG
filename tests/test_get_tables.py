@@ -76,13 +76,13 @@ def test_preprocess_svrgis_table():
     dy = test_df.dy
     hr = test_df.hr
 
-    assert_equal(yr, [2005, 2011, 2017])
+    assert_equal(yr, np.array([2005, 2011, 2017]))
 
-    assert_equal(mo, [8, 4, 2])
+    assert_equal(mo, np.array([8, 4, 2]))
 
-    assert_equal(dy, [18, 27, 7])
+    assert_equal(dy, np.array([18, 27, 7]))
 
-    assert_equal(hr, [0, 18, 1])
+    assert_equal(hr, np.array([0, 18, 1]))
 
 
 # def _create_svrgis_table():
