@@ -62,11 +62,11 @@ def test_preprocess_svrgis_table():
     test_df = _preprocess_svrgis_table(test_df)
     dts = test_df.date_utc.values
 
-    res = np.array(['2011-04-28T00:00:00.000000000', '2011-04-28T00:15:00.000000000'], dtype='datetime64[ns]')
+    res = np.array(['2011-04-28T18:00:00.000000000', '2011-04-28T18:15:00.000000000'], dtype='datetime64[ns]')
     assert_equal(dts, res)
 
-    d = {'om': [1, 2], 'date': ['2005-08-17', '2011-04-27', '2017-02-07'],
-         'time': ['06:00:00', '12:00:00', '15:15:00']}
+    d = {'om': [1, 2, 3], 'date': ['2005-08-17', '2011-04-27', '2017-02-07'],
+         'time': ['18:00:00', '12:00:00', '15:15:00']}
     test_df = pd.DataFrame.from_dict(d)
 
     test_df = _preprocess_svrgis_table(test_df)
@@ -80,9 +80,9 @@ def test_preprocess_svrgis_table():
 
     assert_equal(mo, [8, 4, 2])
 
-    assert_equal(dy, [17, 27, 7])
+    assert_equal(dy, [18, 27, 7])
 
-    assert_equal(hr, [12, 18, 1])
+    assert_equal(hr, [0, 18, 1])
 
 
 # def _create_svrgis_table():
