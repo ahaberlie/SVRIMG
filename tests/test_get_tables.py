@@ -82,7 +82,7 @@ def test_preprocess_svrgis_table():
 
     assert_equal(dy, np.array([18, 27, 7]))
 
-    assert_equal(hr, np.array([0, 18, 1]))
+    assert_equal(hr, np.array([0, 18, 21]))
 
 
 # def _create_svrgis_table():
