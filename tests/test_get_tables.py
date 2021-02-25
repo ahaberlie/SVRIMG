@@ -56,13 +56,13 @@ def test_preprocess_svrgis_table():
 
     import pandas as pd
 
-    d = {'om': [1, 2], 'date': ['2011-04-27', '2011-04-27'], 'time': ['12:00:00', '12:15:00']}
+    d = {'om': [1, 2], 'date': ['2011-04-27', '2011-04-27'], 'time': ['12:00:00', '18:15:00']}
     test_df = pd.DataFrame.from_dict(d)
 
     test_df = _preprocess_svrgis_table(test_df)
     dts = test_df.date_utc.values
 
-    res = np.array(['2011-04-28T18:00:00.000000000', '2011-04-28T18:15:00.000000000'], dtype='datetime64[ns]')
+    res = np.array(['2011-04-27T18:00:00.000000000', '2011-04-28T00:15:00.000000000'], dtype='datetime64[ns]')
     assert_equal(dts, res)
 
     d = {'om': [1, 2, 3], 'date': ['2005-08-17', '2011-04-27', '2017-02-07'],
