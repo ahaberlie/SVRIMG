@@ -51,7 +51,7 @@ from utils.map_helper import draw_box_plot
 %matplotlib inline
 
 ax = plt.subplot(1,1,1)
-ax = draw_box_plot(ax, images[0])
+ax = draw_box_plot(ax, im)
 ```
 
 More complex uses can be explored in the 'examples' folder!
