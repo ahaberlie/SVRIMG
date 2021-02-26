@@ -24,6 +24,8 @@ Subset the data as you wish.
 df_subset = df_indexer[df_indexer.radar_time=='4/27/2011 19:00']
 ```
 
+![alt text](img/df_subset.jpg)
+
 Then use the following code to download the images from your subset:
 
 Note: "../data/tor" is assumed to exist.  I don't want to write folders to your hard drive.
@@ -32,6 +34,17 @@ Note: "../data/tor" is assumed to exist.  I don't want to write folders to your 
 from svrimg.utils.get_images import request_images
 
 info = request_images(df_subset.index.values, "../data/tor")
+```
+
+Which will give a dictionary output like:
+
+```
+{'201104271836z000303011': '../data/../data/tor/2011/201104271836z000303011.png',
+ '201104271902z000300746': '../data/../data/tor/2011/201104271902z000300746.png',
+ '201104271915z000300950': '../data/../data/tor/2011/201104271915z000300950.png',
+ '201104271926z000300945': '../data/../data/tor/2011/201104271926z000300945.png',
+ '201104271926z000300933': '../data/../data/tor/2011/201104271926z000300933.png',
+ '201104271928z000303012': '../data/../data/tor/2011/201104271928z000303012.png'}
 ```
 
 To view a single image, look up its uid in 'info' above:
@@ -55,12 +68,15 @@ NOTE: If not using juptyer notebook, just remove '%matplotlib inline'
 
 ```
 import matplotlib.pyplot as plt
-from utils.map_helper import draw_box_plot
+from svrimg.mapping.map_helper import draw_box_plot
 %matplotlib inline
 
 ax = plt.subplot(1,1,1)
 ax = draw_box_plot(ax, im)
 ```
+
+![alt text](img/eg_radar_img.jpg)
+
 
 More complex uses can be explored in the 'examples' folder!
 
