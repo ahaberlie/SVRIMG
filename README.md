@@ -16,7 +16,15 @@ from svrimg.utils.get_tables import get_table
 df_indexer = get_table(which='svrimg', haz_type='tor')
 ```
 
-Use df_indexer to subset the data as you wish.  Then use the following code to download the images from your subset:
+![alt text](img/df_indexer.jpg)
+
+Subset the data as you wish.
+
+```
+df_subset = df_indexer[df_indexer.radar_time=='4/27/2011 19:00']
+```
+
+Then use the following code to download the images from your subset:
 
 Note: "../data/tor" is assumed to exist.  I don't want to write folders to your hard drive.
 

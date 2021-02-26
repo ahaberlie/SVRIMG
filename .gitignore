@@ -36,6 +36,8 @@
 *.mp4
 *.ini
 
+!img/*
+
 .coverage
 .cache
 
