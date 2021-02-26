@@ -6,6 +6,57 @@
 
 Note: The SVRIMG interface is still extremely new, and is likely to change. Do not consider anything "stable".
 
+<h2> Usage </h2>
+
+Accessing the svrimg index table.  You can select 'tor', 'wind', or 'hail' for haz_type:
+
+```
+from svrimg.utils.get_tables import get_table
+
+df_indexer = get_table(which='svrimg', haz_type='tor')
+```
+
+Use df_indexer to subset the data as you wish.  Then use the following code to download the images from your subset:
+
+Note: "../data/tor" is assumed to exist.  I don't want to write folders to your hard drive.
+
+```
+from svrimg.utils.get_images import request_images
+
+info = request_images(df_subset.index.values, "../data/tor")
+```
+
+To view a single image, look up its uid in 'info' above:
+
+```
+from svrimg.utils.get_images import read_image
+
+uid = "201104271836z000303011"
+fname = info[uid]
+```
+
+And read in the file
+
+```
+im = read_image(fname)
+```
+
+You can then plot the file with a scale using the following code.
+
+NOTE: If not using juptyer notebook, just remove '%matplotlib inline'
+
+```
+import matplotlib.pyplot as plt
+from utils.map_helper import draw_box_plot
+%matplotlib inline
+
+ax = plt.subplot(1,1,1)
+ax = draw_box_plot(ax, images[0])
+```
+
+More complex uses can be explored in the 'examples' folder!
+
+
 <h3>Dependencies</h3>
 <p>These Python packages are required to run the base code in this repository.</p>
 <lu>
