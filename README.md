@@ -28,23 +28,24 @@ df_subset = df_indexer[df_indexer.radar_time=='4/27/2011 19:00']
 
 Then use the following code to download the images from your subset:
 
-Note: "../data/tor" is assumed to exist.  I don't want to write folders to your hard drive.
+Note: "../data" is assumed to exist.  In the following example, a folder 
+named 'tor' will be created in "../data".
 
 ```
 from svrimg.utils.get_images import request_images
 
-info = request_images(df_subset.index.values, "../data/tor")
+info = request_images(df_subset.index.values, haz_type='tor', data_dir="../data")
 ```
 
 Which will give a dictionary output like:
 
 ```
-{'201104271836z000303011': '../data/../data/tor/2011/201104271836z000303011.png',
- '201104271902z000300746': '../data/../data/tor/2011/201104271902z000300746.png',
- '201104271915z000300950': '../data/../data/tor/2011/201104271915z000300950.png',
- '201104271926z000300945': '../data/../data/tor/2011/201104271926z000300945.png',
- '201104271926z000300933': '../data/../data/tor/2011/201104271926z000300933.png',
- '201104271928z000303012': '../data/../data/tor/2011/201104271928z000303012.png'}
+{'201104271836z000303011': '../data/tor/2011/201104271836z000303011.png',
+ '201104271902z000300746': '../data/tor/2011/201104271902z000300746.png',
+ '201104271915z000300950': '../data/tor/2011/201104271915z000300950.png',
+ '201104271926z000300945': '../data/tor/2011/201104271926z000300945.png',
+ '201104271926z000300933': '../data/tor/2011/201104271926z000300933.png',
+ '201104271928z000303012': '../data/tor/2011/201104271928z000303012.png'}
 ```
 
 To view a single image, look up its uid in 'info' above:
