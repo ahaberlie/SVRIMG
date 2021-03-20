@@ -123,11 +123,11 @@ pip install -r minimum_requirements.txt
 </p>
 <h3>Code Documentation</h3>
 <p>
-To see how you can utilize the svrimg package using Python, please examine the <a href=http://svrimg.org/documentation/>SVRIMG Documentation Page</a>
+Coming soon!
 </p>
 <h3>Overview</h3>
 <p>
-The <a href="http://svrimg.org">SVRIMG website</a> provides a "one stop shop" for over 25,000 (and more to come) data rich, geospatial, radar reflectivity images centered on high-impact weather events. 
+The <a href="http://svrimg.org">SVRIMG website</a> provides a "one stop shop" for over 500,000 data rich, geospatial, radar reflectivity images centered on high-impact weather events. 
 These images have consistent dimensions and intensity values on a grid with relatively low spatial distortion over the Conterminous United States. So, they 
 are perfect for training and validating machine learning models. Crowd-sourced labels will provide a consistent dataset on which to test model performance.
 We also plan to provide pre-trained models, either generated from unlabeled (GAN) or labeled images.
