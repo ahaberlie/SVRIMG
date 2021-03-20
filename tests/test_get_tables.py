@@ -92,7 +92,7 @@ def test_get_pred_tables():
 
     ids = pd.read_csv(data_dir + "ids.csv")
     classes = pd.read_csv(data_dir + "class.csv")
-    class_names = pd.read_csv(data_dir + "class_names.csv")
+    class_names = pd.read_csv(data_dir + "class_name.csv")
     
     eg_table = get_pred_tables(data_dir)
         
