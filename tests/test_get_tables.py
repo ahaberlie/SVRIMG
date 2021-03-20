@@ -84,6 +84,25 @@ def test_preprocess_svrgis_table():
 
     assert_equal(hr, np.array([0, 18, 21]))
 
+def test_get_pred_tables():
+
+    data_dir = "{}/preds/".format(TEST_DATA_DIR)
+
+    ids = pd.read_csv(data_dir + "ids.csv")
+    classes = pd.read_csv(data_dir + "class.csv")
+    class_names = pd.read_csv(data_dir + "class_names.csv")
+    
+    eg_table = get_pred_tables(data_dir)
+        
+    assert_equal(ids, eg_table.index.values)
+    assert_equal(classes, eg_table['Class Code'].values)
+    assert_equal(class_names, eg_table['Class Name'].values)
+    
+    eg_table = get_pred_tables(data_dir, example=False, default_name="*_table_*.csv", remove_first_row=True)
+    
+    assert_equal(ids, eg_table.index.values)
+    assert_equal(classes, eg_table['Class Code'].values)
+    assert_equal(class_names, eg_table['Class Name'].values)
 
 # def _create_svrgis_table():
 #
@@ -95,5 +114,5 @@ def test_preprocess_svrgis_table():
 #
 #
 #
-# def test_get_pred_tables():
+# 
 #

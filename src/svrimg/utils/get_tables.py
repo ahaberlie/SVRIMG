@@ -254,11 +254,11 @@ def get_table(which, haz_type, data_dir="../data/csvs",
 
 
 def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True, 
-                    default_name="*_Table_*.csv", csv_name="eg_classes_96-17",
+                    default_name="*_table_*.csv", csv_name="eg_classes_96-17",
                     remove_first_row=False):
     r"""Either downloads example predictions if 'example' is true, or combines your prediction
     tables in 'data_dir' into one table using the default naming format of 
-    '*_Table_*.csv' or whatever is passed into default_name. This will
+    '*_table_*.csv' or whatever is passed into default_name. This will
     attempt to grab every year from 1996 - 2017, but will not fail if a year is missing. 
     By default, the first row in every year's table is example data on svrimg.org, and 
     it can be removed as long as 'remove_first_row' is True. By default, if there is a 
@@ -278,13 +278,13 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
         yearly tables. Default is True.
     default_name: str
         Naming format for local csv files. Stars are used as wildcards.
-        Default is '*_Table_*.csv'.
+        Default is '*_table_*.csv'.
     csv_name: str
         Default name of new csv file containing classifications.
     remove_first_row: bool
         Removes first row from each year of local table data if True, ignores 
         first row if false. Default is False.   
-        
+            
     Returns
     -------
     csv: DataFrame

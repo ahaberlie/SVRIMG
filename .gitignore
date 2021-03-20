@@ -37,6 +37,7 @@
 *.ini
 
 !img/*
+!data/test/preds/*
 
 .coverage
 .cache
