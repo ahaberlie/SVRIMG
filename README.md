@@ -81,6 +81,14 @@ ax = draw_box_plot(ax, im)
 
 More complex uses can be explored in the 'examples' folder!
 
+<h3>Bulk downloads</h3>
+
+If using the interface for more than just a handful of images, it may be useful to instead download the tar.gz files containing all of the images and placing these into your data folder:
+
+https://svrimg.org/data/tars/
+
+You may have to reorganize the files to work with the basic examples provided on this page (i.e., you have to move all of the files out of their monthly subfolders into a main "year" folder).
+
 
 <h3>Dependencies</h3>
 <p>These Python packages are required to run the base code in this repository.</p>
