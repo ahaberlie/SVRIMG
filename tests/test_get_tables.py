@@ -86,7 +86,7 @@ def test_preprocess_svrgis_table():
 
 def test_get_pred_tables():
 
-    data_dir = "{}/preds/".format(TEST_DATA_DIR)
+    data_dir = "{}/preds/".format(test_data_dir)
 
     ids = pd.read_csv(data_dir + "ids.csv")
     classes = pd.read_csv(data_dir + "class.csv")
