@@ -296,6 +296,7 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
         if not os.path.exists("{}/{}.csv".format(data_dir, csv_name)):
             _url = url + "sample_classifications_96-17.csv"
             c = pd.read_csv(_url, index_col='UNID')
+            c = c.sort_index()
             c.to_csv("{}/{}.csv".format(data_dir, csv_name))
     else:
         csvs = []
