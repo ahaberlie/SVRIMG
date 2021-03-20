@@ -41,12 +41,13 @@ def _create_unid(x, haz_type):
 
 def _create_dtime(x):
     r"""Generates datetimes from given DataFrame row columns date
-    and time. If UTC=True, add 6 hours to this time.
+    and time. Always adds 6 hours to the expected CST time to convert
+    to UTC.
     
     Parameters
     ----------
     x: Series
-        A single row from a pandas DataFrame
+        A single row from a pandas DataFrame.
         
     Returns
     -------
@@ -311,6 +312,7 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
             a = a.set_index("UNID")
             csvs.append(a)
         csvs = pd.concat(csvs)
+        csvs = csvs.sort_index()
         csvs.to_csv("{}/{}.csv".format(data_dir, csv_name))
             
     return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
