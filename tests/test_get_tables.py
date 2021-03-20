@@ -96,15 +96,15 @@ def test_get_pred_tables():
     
     eg_table = get_pred_tables(data_dir)
         
-    assert_equal(ids, eg_table.index.values)
-    assert_equal(classes, eg_table['Class Code'].values)
-    assert_equal(class_names, eg_table['Class Name'].values)
+    assert_equal(ids['UNID'].values, eg_table.index.values)
+    assert_equal(classes['Class Code'].values, eg_table['Class Code'].values)
+    assert_equal(class_names['Class Name'].values, eg_table['Class Name'].values)
     
     eg_table = get_pred_tables(data_dir, example=False, default_name="*_table_*.csv", remove_first_row=True)
     
-    assert_equal(ids, eg_table.index.values)
-    assert_equal(classes, eg_table['Class Code'].values)
-    assert_equal(class_names, eg_table['Class Name'].values)
+    assert_equal(ids['UNID'].values, eg_table.index.values)
+    assert_equal(classes['Class Code'].values, eg_table['Class Code'].values)
+    assert_equal(class_names['Class Name'].values, eg_table['Class Name'].values)
 
 # def _create_svrgis_table():
 #
