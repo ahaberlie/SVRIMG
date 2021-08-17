@@ -146,7 +146,7 @@ def _create_svrgis_table(in_name, out_name, haz_type, data_dir="../data/csvs",
 
 
 def _create_index_table(out_name, haz_type, data_dir="../data/csvs", 
-                        url="https://svrimg.org/data/raw_img/", start_year=1996,
+                        url="http://svrimg.niu.edu/data/raw_img/", start_year=1996,
                         end_year=2017):
     r"""Attempts to download and concatenate monthly tables from svrimg for
     a given hazard type.  If the file doesn't exist, saves result out_name 
@@ -163,7 +163,7 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csvs",
         new file will be saved. Default is "../data/csvs"
     url: str
         Base url directory where the table data is located. 
-        Default is "http://svrimg.org/data/".
+        Default is "http://svrimg.niu.edu/data/".
     start_year: int
         First year from which to return data. Default is 1996.
     end_year: int
@@ -203,7 +203,7 @@ def _create_index_table(out_name, haz_type, data_dir="../data/csvs",
 
 
 def get_table(which, haz_type, data_dir="../data/csvs", 
-              url="https://svrimg.org/data/"):
+              url="http://svrimg.niu.edu/data/"):
     r"""Downloads svrimg index or svrgis report table from the given url 
     and returns a pandas DataFrame. If the table is already downloaded, 
     it simply returns a pandas DataFrame. This assumes that 'data_dir' 
@@ -221,7 +221,7 @@ def get_table(which, haz_type, data_dir="../data/csvs",
         "../data/csv/".
     url: str
         Base url directory where the table data is located. 
-        Default is "http://svrimg.org/data/".
+        Default is "http://svrimg.niu.edu/data/".
         
     Returns
     -------
@@ -254,7 +254,7 @@ def get_table(which, haz_type, data_dir="../data/csvs",
         return pd.read_csv(file_name, index_col=id_col)          
 
 
-def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True, 
+def get_pred_tables(data_dir, url="http://svrimg.niu.edu/data/", example=True, 
                     default_name="*_table_*.csv", csv_name="eg_classes_96-17",
                     remove_first_row=False):
     r"""Either downloads example predictions if 'example' is true, or combines your prediction
@@ -273,7 +273,7 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
         Base directory in which to save the csv file.
     url: str
         Base url directory where the table data is located. 
-        Default is "http://svrimg.org/data/".
+        Default is "http://svrimg.niu.edu/data/".
     example: bool
         If True, download example data.  If false, look for local 
         yearly tables. Default is True.
@@ -319,7 +319,7 @@ def get_pred_tables(data_dir, url="https://svrimg.org/data/", example=True,
     return pd.read_csv("{}/{}.csv".format(data_dir, csv_name), index_col='UNID')
 
 
-def get_geog(data_dir="../data/geog/", url="https://svrimg.org/maps/"):
+def get_geog(data_dir="../data/geog/", url="http://svrimg.niu.edu/maps/"):
     r"""Downloads svrimg geography netcdf file from the given url and returns
     an xarray dataset. If the netcdf file is already downloaded, it simply 
     returns an xarray dataset.  This assumes that 'data_dir' exists.
@@ -330,7 +330,7 @@ def get_geog(data_dir="../data/geog/", url="https://svrimg.org/maps/"):
         Base directory in which to save the csv file.
     url: str
         Base url directory where the table data is located. 
-        Default is "http://svrimg.org/maps/".
+        Default is "http://svrimg.niu.edu/maps/".
   
     Returns
     -------
