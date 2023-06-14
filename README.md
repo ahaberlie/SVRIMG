@@ -1,7 +1,6 @@
 <h1><a href="http://www.svrimg.org">SVRIMG - SeVere Reflectivity IMaGe Dataset</a></h1>
 <h2>Radar Reflectivity Images Centered on Severe Weather Reports</h2>
 
-[![Build Status](https://travis-ci.com/ahaberlie/SVRIMG.svg?branch=master)](https://travis-ci.com/ahaberlie/SVRIMG)
 [![Code Coverage Status](https://codecov.io/github/ahaberlie/SVRIMG/coverage.svg?branch=master)](https://codecov.io/github/ahaberlie/SVRIMG?branch=master)
 
 Note: The SVRIMG interface is still extremely new, and is likely to change. Do not consider anything "stable".
