@@ -6,9 +6,7 @@ from svrimg.utils.get_images import (_parse_str, request_images,
                                      get_img_list, geo_read_image,
                                      read_image)
                                      
-test_dir = os.environ.get('GITHUB_PATH')                                  
-
-test_data_dir = f"{test_dir}/data/test/"                                 
+test_data_dir = "data/test/"                                  
 
 
 def test_parse_str():

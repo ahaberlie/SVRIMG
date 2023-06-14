@@ -254,7 +254,7 @@ def get_table(which, haz_type, data_dir="../data/csvs",
         return pd.read_csv(file_name, index_col=id_col)          
 
 
-def get_pred_tables(data_dir, url="https://nimbus.niu.edu/svrimg/data", example=True, 
+def get_pred_tables(data_dir, url="https://nimbus.niu.edu/svrimg/data/", example=True, 
                     default_name="*_table_*.csv", csv_name="eg_classes_96-17",
                     remove_first_row=False):
     r"""Either downloads example predictions if 'example' is true, or combines your prediction
