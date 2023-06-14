@@ -25,7 +25,7 @@ def _write_img(url_file, out_file):
         file.write(img.read())
 
 
-def _parse_str(in_str, haz_type, url="https://svrimg.niu.edu/data/raw_img"):
+def _parse_str(in_str, haz_type, url="https://nimbus.niu.edu/svrimg/data/"):
     r"""Attempts to parse a string assuming it has some form 
     of datetime format. Returns a formatted base url directory 
     for monthly files. Function will fail if in_str is not 
@@ -41,7 +41,7 @@ def _parse_str(in_str, haz_type, url="https://svrimg.niu.edu/data/raw_img"):
         or 'wind'.       
     url: dictionary
         Base url from which to access files. 
-        Default = "http://svrimg.niu.edu/data/raw_img/"
+        Default = "http://nimbus.niu.edu/svrimg/data/"
 
     Returns
     -------
@@ -197,7 +197,7 @@ def geo_read_image(index, locator, uid, x_=1399, y_=899):
 
 
 def get_example_data(data_type, data_dir="../data/pkls/", 
-                     url="https://svrimg.niu.edu/data/classifications/"):
+                     url="https://nimbus.niu.edu/svrimg/data/classifications/"):
     r"""Returns training, validation, or testing data, depending on the
     value of 'data_type'.  This function attempts to download the data
     if the file does not exist in 'data_dir'.  Returns x and y data
@@ -212,7 +212,7 @@ def get_example_data(data_type, data_dir="../data/pkls/",
         is "../data/pkls/".
     url: str
         Base url directory where the example data are located. Default
-        is "http://svrimg.niu.edu/data/classifications/".
+        is "http://nimbus.niu.edu/svrimg/data/classifications/".
 
     Returns
     -------
@@ -278,7 +278,7 @@ def read_image(filename):
     return imread(filename, pilmode='P')
 
 
-def get_example(data_dir="../data/example/", url="https://svrimg.niu.edu/data/"):
+def get_example(data_dir="../data/example/", url="https://nimbus.niu.edu/svrimg/data/"):
     r"""Downloads an interpolated GridRad (gridrad.org) file from a url and
     returns an xarray dataset representation from April 27th at 1900 UTC.  
     If the file is already downloaded, it simply returns an xarray dataset 
@@ -291,7 +291,7 @@ def get_example(data_dir="../data/example/", url="https://svrimg.niu.edu/data/")
         is "../data/example/".
     url: str
         Base url directory where the example data is located. Default
-        is "http://svrimg.niu.edu/data/".
+        is "http://nimbus.niu.edu/svrimg/data/".
 
     Returns
     -------
