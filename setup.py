@@ -7,5 +7,5 @@ setup(name='svrimg',
       author_email='svr.image@gmail.com',
       package_dir={'':'src'},
       packages=find_namespace_packages(where="src"),
-      url='http://svrimg.org'
+      url='http://nimbus.niu.edu/svrimg'
      )

@@ -15,13 +15,13 @@ def test_parse_str():
     
     result = _parse_str(input_str, "tor")
     
-    assert_equal(result, "https://nimbus.niu.edu/svrimg/data/raw_img/tor/1996/01/")
+    assert_equal(result, "https://nimbus.niu.edu/svrimg/data/tor/1996/01/")
     
     input_str = "19960101"
     
     result = _parse_str(input_str, "tor")
     
-    assert_equal(result, "https://nimbus.niu.edu/svrimg/data/raw_img/tor/1996/01/")
+    assert_equal(result, "https://nimbus.niu.edu/svrimg/data/tor/1996/01/")
 
 
 def test_request_images():
