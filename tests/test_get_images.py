@@ -6,7 +6,7 @@ from svrimg.utils.get_images import (_parse_str, request_images,
                                      get_img_list, geo_read_image,
                                      read_image)
                                      
-test_data_dir = os.environ.get('TEST_DATA_DIR')                                  
+test_data_dir = "data/test/"                                  
 
 
 def test_parse_str():
