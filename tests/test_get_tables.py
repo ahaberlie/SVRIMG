@@ -6,8 +6,9 @@ from svrimg.utils.get_tables import (_create_unid, _create_dtime, _preprocess_sv
                                      _create_svrgis_table, _create_index_table,
                                      get_table, get_pred_tables)
                                      
-test_data_dir = "data/test/"                                   
+test_dir = os.environ.get('GITHUB_PATH')                                  
 
+test_data_dir = f"{test_dir}/data/test/"
 
 def test_create_unid():
 
