@@ -1,4 +1,4 @@
-<h1><a href="http://nimbus.niu.edu/svrimg">SVRIMG - SeVere Reflectivity IMaGe Dataset</a></h1>
+<h1><a href="https://nimbus.niu.edu/svrimg">SVRIMG - SeVere Reflectivity IMaGe Dataset</a></h1>
 <h2>Radar Reflectivity Images Centered on Severe Weather Reports</h2>
 
 [![Code Coverage Status](https://codecov.io/github/ahaberlie/SVRIMG/coverage.svg?branch=master)](https://codecov.io/github/ahaberlie/SVRIMG?branch=master)
@@ -84,7 +84,7 @@ More complex uses can be explored in the 'examples' folder!
 
 If using the interface for more than just a handful of images, it may be useful to instead download the tar.gz files containing all of the images and placing these into your data folder:
 
-https://svrimg.org/data/tars/
+https://nimbus.niu.edu/svrimg/data/tars/
 
 You may have to reorganize the files to work with the basic examples provided on this page (i.e., you have to move all of the files out of their monthly subfolders into a main "year" folder).
 
@@ -134,7 +134,7 @@ Coming soon!
 </p>
 <h3>Overview</h3>
 <p>
-The <a href="http://nimbus.niu.edu/svrimg">SVRIMG website</a> provides a "one stop shop" for over 500,000 data rich, geospatial, radar reflectivity images centered on high-impact weather events. 
+The <a href="https://nimbus.niu.edu/svrimg">SVRIMG website</a> provides a "one stop shop" for over 500,000 data rich, geospatial, radar reflectivity images centered on high-impact weather events. 
 These images have consistent dimensions and intensity values on a grid with relatively low spatial distortion over the Conterminous United States. So, they 
 are perfect for training and validating machine learning models. Crowd-sourced labels will provide a consistent dataset on which to test model performance.
 We also plan to provide pre-trained models, either generated from unlabeled (GAN) or labeled images.
@@ -144,7 +144,7 @@ The goal is to create a "model zoo" for a variety of applications and to promote
 <p>
 There is a phrase: "many hands make light work". This also applies to generating machine learning datasets.  If hundreds of people classify hundreds of images,
 we can easily create a dataset of 10s of thousands of images. The process is similar to playing a video game on your phone.  After accessing the map on the website,
-you can explore different tornado report locations and see what the radar image looked like at the time the tornado touched down.  Go to <a href="http://nimbus.niu.edu/svrimg">SVRIMG</a>
+you can explore different tornado report locations and see what the radar image looked like at the time the tornado touched down.  Go to <a href="https://nimbus.niu.edu/svrimg">SVRIMG</a>
 to examine the images and make your own classifications.</p>
 
 <h3 class=>Data Methodology</h3>
@@ -152,8 +152,8 @@ to examine the images and make your own classifications.</p>
 Radar images are centered on <a href=https://www.spc.noaa.gov/wcm/#data>SPC severe weather reports</a> and extracted from the closest 
 hourly data in <a href=http://gridrad.org/>GridRad</a> which can be downloaded from the <a href=https://rda.ucar.edu/datasets/ds841.0/>Research Data Archive</a>.  
 The original ~2x2km 3D data are converted to 2D by calculating the column maximum reflectivity.  These values are then converted to 8-bit integers and interpolated 
-to a 3.75 km <a href="http://nimbus.niu.edu/svrimg/maps/svrimg_geog.nc">Lambert Conic Conformal Grid</a> using nearest neighbor. The 136 x 136 dimensions result in a region approximately 512 x 512 km.
-Please view the <a href="http://nimbus.niu.edu/svrimg/raw_data.html">data information page</a> for more information and to download the raw data.
+to a 3.75 km <a href="https://nimbus.niu.edu/svrimg/maps/svrimg_geog.nc">Lambert Conic Conformal Grid</a> using nearest neighbor. The 136 x 136 dimensions result in a region approximately 512 x 512 km.
+Please view the <a href="https://nimbus.niu.edu/svrimg/raw_data.html">data information page</a> for more information and to download the raw data.
 </p>
 
 <h3>Data Citations</h3>
